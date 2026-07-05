@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SistemaGestaoDeConcessionaria.Domain.Entities
 {
-    internal class Usuario
+    public class Usuario
     {
-        public int Id { get; set; }
+        public int idUsuario { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
