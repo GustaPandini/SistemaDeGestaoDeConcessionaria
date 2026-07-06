@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SistemaGestaoDeConcessionaria.Domain.Entities
 {
-    public class Vendas
+    public class Venda
     {
-        public int idVendas { get; set; }
+        public int idVenda { get; set; }
         public DateOnly DataDaVenda { get; set; }
         public decimal ValorPago { get; set; }
         public string FormaDePagamento { get; set; }
