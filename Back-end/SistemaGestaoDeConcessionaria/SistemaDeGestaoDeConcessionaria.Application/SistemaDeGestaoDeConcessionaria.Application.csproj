@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaGestaoDeConcessionaria.Domain\SistemaGestaoDeConcessionaria.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
