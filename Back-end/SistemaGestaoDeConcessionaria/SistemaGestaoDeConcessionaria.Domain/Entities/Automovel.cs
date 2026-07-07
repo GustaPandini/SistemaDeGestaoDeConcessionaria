@@ -19,5 +19,6 @@ namespace SistemaGestaoDeConcessionaria.Domain.Entities
         public decimal Preco { get; set; }
         public bool Blindado { get; set; }
         public int QuantidadeDonos { get; set; }
+        public bool Vendido { get; set; }
     }
 }

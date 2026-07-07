@@ -1,36 +1,57 @@
-﻿using SistemaGestaoDeConcessionaria.Domain.Entities;
+﻿using SistemaDeGestaoDeConcessionaria.Infra.Data.Context;
+using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        public Task<Usuario> AddAsync(Usuario usuario)
+        private readonly ApplicationDbContext _context;
+
+        public UsuarioRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Usuario> DeleteAsync(int idUsuario)
+        public async Task<Usuario> AddAsync(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _context.Usuario.Add(usuario);
+            await _context.SaveChangesAsync();
+            return usuario;
         }
 
-        public Task<List<Usuario>> GetAllAsync()
+        public async Task<Usuario> DeleteAsync(int idUsuario)
         {
-            throw new NotImplementedException();
+            var usuario = await _context.Usuario.FindAsync(idUsuario);
+            if(usuario == null)
+            {
+                return null;
+            }
+
+            _context.Usuario.Remove(usuario);
+            await _context.SaveChangesAsync();
+            return usuario;
         }
 
-        public Task<Usuario> GetByIdAsync(int idUsuario)
+        public async Task<List<Usuario>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Usuario.ToListAsync();
         }
 
-        public Task<Usuario> UpdateAsync(Usuario usuario)
+        public async Task<Usuario> GetByIdAsync(int idUsuario)
         {
-            throw new NotImplementedException();
+            return await _context.Usuario.FindAsync(idUsuario);
+        }
+
+        public async Task<Usuario> UpdateAsync(Usuario usuario)
+        {
+            _context.Usuario.Update(usuario);
+            await _context.SaveChangesAsync();
+            return usuario;
         }
     }
 }
