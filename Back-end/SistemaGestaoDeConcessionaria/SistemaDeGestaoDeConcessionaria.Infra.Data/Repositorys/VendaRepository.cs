@@ -1,36 +1,56 @@
-﻿using SistemaGestaoDeConcessionaria.Domain.Entities;
+﻿using SistemaDeGestaoDeConcessionaria.Infra.Data.Context;
+using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 {
     public class VendaRepository : IVendaRepository
     {
-        public Task<Venda> AddAsync(Venda venda)
+        private readonly ApplicationDbContext _context;
+
+        public VendaRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<Venda> AddAsync(Venda venda)
+        {
+            _context.Venda.Add(venda);
+            await _context.SaveChangesAsync();
+            return venda;
         }
 
-        public Task<Venda> DeleteAsync(int idVenda)
+        public async Task<Venda> DeleteAsync(int idVenda)
         {
-            throw new NotImplementedException();
+            var venda = await _context.Venda.FindAsync(idVenda);
+            if (venda == null)
+            {
+                return null;
+            }
+
+            _context.Venda.Remove(venda);
+            await _context.SaveChangesAsync();
+            return venda;
         }
 
-        public Task<List<Venda>> GetAllAsync()
+        public async Task<List<Venda>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Venda.ToListAsync();
         }
 
-        public Task<Venda> GetByIdAsync(int idVenda)
+        public async Task<Venda> GetByIdAsync(int idVenda)
         {
-            throw new NotImplementedException();
+            return await _context.Venda.FindAsync(idVenda);
         }
 
-        public Task<Venda> UpdateAsync(Venda venda)
+        public async Task<Venda> UpdateAsync(Venda venda)
         {
-            throw new NotImplementedException();
+            _context.Venda.Update(venda);
+            await _context.SaveChangesAsync();
+            return venda;
         }
     }
 }

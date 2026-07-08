@@ -1,36 +1,57 @@
-﻿using SistemaGestaoDeConcessionaria.Domain.Entities;
+﻿using MySqlX.XDevAPI;
+using SistemaDeGestaoDeConcessionaria.Infra.Data.Context;
+using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 {
     public class AutomovelRepository : IAutomovelRepository
     {
-        public Task<Automovel> AddAsync(Automovel automovel)
+        private readonly ApplicationDbContext _context;
+
+        public AutomovelRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<Automovel> AddAsync(Automovel automovel)
+        {
+            _context.Automovel.Add(automovel);
+            await _context.SaveChangesAsync();
+            return automovel;
         }
 
-        public Task<Automovel> DeleteAsync(int idAutomovel)
+        public async Task<Automovel> DeleteAsync(int idAutomovel)
         {
-            throw new NotImplementedException();
+            var automovel = await _context.Automovel.FindAsync(idAutomovel);
+            if (automovel == null)
+            {
+                return null;
+            }
+
+            _context.Automovel.Remove(automovel);
+            await _context.SaveChangesAsync();
+            return automovel;
         }
 
-        public Task<List<Automovel>> GetAllAsync()
+        public async Task<List<Automovel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Automovel.ToListAsync();
         }
 
-        public Task<Automovel> GetByIdAsync(int idAutomovel)
+        public async Task<Automovel> GetByIdAsync(int idAutomovel)
         {
-            throw new NotImplementedException();
+            return await _context.Automovel.FindAsync(idAutomovel);
         }
 
-        public Task<Automovel> UpdateAsync(Automovel automovel)
+        public async Task<Automovel> UpdateAsync(Automovel automovel)
         {
-            throw new NotImplementedException();
+            _context.Automovel.Update(automovel);
+            await _context.SaveChangesAsync();
+            return automovel;
         }
     }
 }
