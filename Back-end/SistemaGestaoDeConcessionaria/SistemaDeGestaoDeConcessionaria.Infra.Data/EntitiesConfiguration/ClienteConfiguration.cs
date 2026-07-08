@@ -20,7 +20,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.EntitiesConfiguration
                 .HasMaxLength(11);
             builder.Property(c => c.Telefone)
                 .IsRequired()
-                .HasMaxLength(15);
+                .HasMaxLength(13);
             builder.Property(c => c.Endereco)
                 .IsRequired()
                 .HasMaxLength(200);

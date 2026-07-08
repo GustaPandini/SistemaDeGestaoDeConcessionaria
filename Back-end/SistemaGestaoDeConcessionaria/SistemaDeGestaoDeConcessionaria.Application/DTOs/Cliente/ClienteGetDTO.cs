@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SistemaGestaoDeConcessionaria.Domain.Entities
+namespace SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente
 {
-    public class Cliente
+    public class ClienteGetDTO
     {
         public int idCliente { get; set; }
         public string Nome { get; set; }
