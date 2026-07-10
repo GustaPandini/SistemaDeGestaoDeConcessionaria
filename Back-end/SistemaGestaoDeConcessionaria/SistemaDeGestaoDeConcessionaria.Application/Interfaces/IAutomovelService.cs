@@ -9,6 +9,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Interfaces
     public interface IAutomovelService
     {
         Task<AutomovelGetDTO> GetByIdAsync(int idAutomovel);
+        Task<AutomovelGetDTO> GetByPlacaOuChassiAsync(string placaOuChassi);
         Task<List<AutomovelGetDTO>> GetAllAsync();
         Task<AutomovelGetDTO> AddAsync(AutomovelPostDTO automovelPostDTO);
         Task<AutomovelGetDTO> UpdateAsync(AutomovelPutDTO automovelPutDTO);

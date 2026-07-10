@@ -18,6 +18,8 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.EntitiesConfiguration
             builder.Property(c => c.CPF)
                 .IsRequired()
                 .HasMaxLength(11);
+            builder.HasIndex(c => c.CPF)
+                .IsUnique();
             builder.Property(c => c.Telefone)
                 .IsRequired()
                 .HasMaxLength(13);

@@ -9,6 +9,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Interfaces
     public interface IUsuarioService
     {
         Task<UsuarioGetDTO> GetByIdAsync(int idUsuario);
+        Task<UsuarioGetDTO> GetByEmailAsync(string email);
         Task<List<UsuarioGetDTO>> GetAllAsync();
         Task<UsuarioGetDTO> AddAsync(UsuarioPostDTO usuarioPostDTO);
         Task<UsuarioGetDTO> UpdateAsync(UsuarioPutDTO usuarioPutDTO);

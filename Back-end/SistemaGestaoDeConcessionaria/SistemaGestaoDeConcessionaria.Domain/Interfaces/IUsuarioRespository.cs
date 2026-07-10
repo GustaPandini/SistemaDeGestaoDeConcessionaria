@@ -8,6 +8,7 @@ namespace SistemaGestaoDeConcessionaria.Domain.Interfaces
     public interface IUsuarioRepository
     {
         Task<Usuario> GetByIdAsync(int idUsuario);
+        Task<Usuario> GetByEmailAsync(string email);
         Task<List<Usuario>> GetAllAsync();
         Task<Usuario> AddAsync(Usuario usuario);
         Task<Usuario> UpdateAsync(Usuario usuario);

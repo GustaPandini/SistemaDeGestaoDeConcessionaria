@@ -9,6 +9,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Interfaces
     public interface IClienteService
     {
         Task<ClienteGetDTO> GetByIdAsync(int idCliente);
+        Task<ClienteGetDTO> GetByCPFAsync(string CPF);
         Task<List<ClienteGetDTO>> GetAllAsync();
         Task<ClienteGetDTO> AddAsync(ClientePostDTO clientePostDTO);
         Task<ClienteGetDTO> UpdateAsync(ClientePutDTO clientePutDTO);
