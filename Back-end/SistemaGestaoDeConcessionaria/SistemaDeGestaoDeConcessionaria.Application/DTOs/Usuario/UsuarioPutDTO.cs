@@ -7,6 +7,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.DTOs.Usuario
 {
     public class UsuarioPutDTO
     {
+        [Required(ErrorMessage = "É obrigatório informar o Id do usuário que você quer deletar.")]
+        public int idUsuario { get; set; }
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         [MaxLength(200, ErrorMessage = "O campo Nome deve ter no máximo 200 caracteres.")]
         public string Nome { get; set; }

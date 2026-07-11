@@ -47,6 +47,11 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
             return await _context.Automovel.FindAsync(idAutomovel);
         }
 
+        public async Task<Automovel> GetByPlacaOuChassiAsync(string placaOuChassi)
+        {
+            return await _context.Automovel.FindAsync(placaOuChassi);
+        }
+
         public async Task<Automovel> UpdateAsync(Automovel automovel)
         {
             _context.Automovel.Update(automovel);

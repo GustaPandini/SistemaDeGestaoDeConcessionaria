@@ -42,6 +42,11 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
             return await _context.Usuario.ToListAsync();
         }
 
+        public async Task<Usuario> GetByEmailAsync(string email)
+        {
+            return await _context.Usuario.FindAsync(email);
+        }
+
         public async Task<Usuario> GetByIdAsync(int idUsuario)
         {
             return await _context.Usuario.FindAsync(idUsuario);

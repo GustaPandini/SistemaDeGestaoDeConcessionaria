@@ -41,6 +41,11 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
             return await _context.Cliente.ToListAsync();
         }
 
+        public async Task<Cliente> GetByCPFAsync(string CPF)
+        {
+            return await _context.Cliente.FindAsync(CPF);
+        }
+
         public async Task<Cliente> GetByIdAsync(int idCliente)
         {
             return await _context.Cliente.FindAsync(idCliente);

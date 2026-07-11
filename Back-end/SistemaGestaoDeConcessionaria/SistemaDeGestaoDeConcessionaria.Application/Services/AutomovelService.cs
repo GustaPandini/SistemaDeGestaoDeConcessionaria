@@ -34,6 +34,11 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 QuantidadeDonos = automovelPostDTO.QuantidadeDonos,
                 Vendido = false
             };
+            var automovelExistente = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
+            if (automovelExistente != null)
+            {
+                throw new Exception("Já existe um automóvel com essa placa ou chassi cadastrado.");
+            }
             var automovelAdicionado = await _automovelRepository.AddAsync(automovel);
             return new AutomovelGetDTO
             {
@@ -113,8 +118,33 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             if (automovel == null)
             {
                 return null;
+            };
+            return new AutomovelGetDTO
+            {
+                idAutomovel = automovel.idAutomovel,
+                PlacaOuChassi = automovel.PlacaOuChassi,
+                Marca = automovel.Marca,
+                Modelo = automovel.Modelo,
+                Powertrain = automovel.Powertrain,
+                Versao = automovel.Versao,
+                Cor = automovel.Cor,
+                Ano = automovel.Ano,
+                AnoModelo = automovel.AnoModelo,
+                Quilometragem = automovel.Quilometragem,
+                Preco = automovel.Preco,
+                Blindado = automovel.Blindado,
+                QuantidadeDonos = automovel.QuantidadeDonos,
+                Vendido = automovel.Vendido
+            };
+        }
+
+        public async Task<AutomovelGetDTO> GetByPlacaOuChassiAsync(string placaOuChassi)
+        {
+            var automovel = await _automovelRepository.GetByPlacaOuChassiAsync(placaOuChassi);
+            if (automovel == null)
+            {
+                return null;
             }
-            ;
             return new AutomovelGetDTO
             {
                 idAutomovel = automovel.idAutomovel,
@@ -152,6 +182,11 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 QuantidadeDonos = automovelPutDTO.QuantidadeDonos,
                 Vendido = automovelPutDTO.Vendido
             };
+            var automovelExistente = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
+            if (automovelExistente != null)
+            {
+                throw new Exception("Já existe um automóvel com essa placa ou chassi cadastrado.");
+            }
             var automovelAtualizado = await _automovelRepository.UpdateAsync(automovel);
             if (automovelAtualizado == null)
             {

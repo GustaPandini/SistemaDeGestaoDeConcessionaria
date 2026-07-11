@@ -24,6 +24,11 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Telefone = clientePostDTO.Telefone,
                 Endereco = clientePostDTO.Endereco
             };
+            var clienteExistente = await _clienteRepository.GetByCPFAsync(cliente.CPF);
+            if(clienteExistente != null)
+            {
+                throw new Exception("Já existe um cliente com este CPF.");
+            };
             var clienteAdicionado = await _clienteRepository.AddAsync(cliente);
             return new ClienteGetDTO
             {
@@ -71,6 +76,23 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             return listaClientes;
         }
 
+        public async Task<ClienteGetDTO> GetByCPFAsync(string CPF)
+        {
+            var cliente = await _clienteRepository.GetByCPFAsync(CPF);
+            if (cliente == null)
+            {
+                return null;
+            };
+            return new ClienteGetDTO
+            {
+                idCliente = cliente.idCliente,
+                Nome = cliente.Nome,
+                CPF = cliente.CPF,
+                Telefone = cliente.Telefone,
+                Endereco = cliente.Endereco
+            };
+        }
+
         public async Task<ClienteGetDTO> GetByIdAsync(int idCliente)
         {
             var cliente = await _clienteRepository.GetByIdAsync(idCliente);
@@ -98,6 +120,12 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Telefone = clientePutDTO.Telefone,
                 Endereco = clientePutDTO.Endereco
             };
+            var clienteExistente = await _clienteRepository.GetByCPFAsync(cliente.CPF);
+            if (clienteExistente != null)
+            {
+                throw new Exception("Já existe um cliente com este CPF.");
+            }
+            ;
             var clienteAtualizado = await _clienteRepository.UpdateAsync(cliente);
             if(clienteAtualizado == null)
             {
