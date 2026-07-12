@@ -25,7 +25,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 ValorPago = vendaPostDTO.ValorPago,
                 FormaDePagamento = vendaPostDTO.FormaDePagamento,
                 idAutomovel = vendaPostDTO.idCliente,
-                idCliente = vendaPostDTO.idAutomovel
+                idCliente = vendaPostDTO.idAutomovel,
+                Excluido = false
             };
             var vendaAdicionada = await _vendaRepository.AddAsync(venda);
             return new VendaGetDTO
@@ -102,8 +103,11 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             if (venda == null)
             {
                 return null;
+            };
+            if(venda.Excluido == true)
+            {
+                return null;
             }
-            ;
             return new VendaGetDetailDTO
             {
                 idVenda = venda.idVenda,

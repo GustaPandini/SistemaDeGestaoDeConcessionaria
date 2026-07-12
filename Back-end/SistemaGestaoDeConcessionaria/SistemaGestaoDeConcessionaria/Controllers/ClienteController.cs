@@ -54,5 +54,11 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             }
             return Ok(cliente);
         }
+        [HttpGet]
+        public async Task<ActionResult> GetAllClientes()
+        {
+            var clientes = await _clienteService.GetAllAsync();
+            return Ok(clientes);
+        }
     }
 }

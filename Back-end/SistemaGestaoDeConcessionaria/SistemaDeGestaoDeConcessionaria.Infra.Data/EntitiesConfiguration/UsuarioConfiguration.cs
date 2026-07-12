@@ -27,6 +27,8 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.EntitiesConfiguration
             builder.Property(u => u.Perfil)
                 .IsRequired()
                 .HasMaxLength(50);
+            builder.Property(u => u.Excluido)
+                .IsRequired();
         }
     }
 }

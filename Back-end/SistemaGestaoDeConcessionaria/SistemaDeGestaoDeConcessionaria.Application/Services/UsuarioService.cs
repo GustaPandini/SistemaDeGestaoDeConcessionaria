@@ -33,9 +33,25 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 PasswordSalt = passwordSalt,
                 Perfil = usuarioPostDTO.Perfil
             };
-            var usuarioExistente = await _usuarioRepository.GetByEmailAsync(usuario.Email);
-            if(usuarioExistente != null)
+            var usuarioExiste = await _usuarioRepository.GetByEmailAsync(usuario.Email);
+            if(usuarioExiste != null)
             {
+                if(usuarioExiste.Excluido == true)
+                {
+                    usuarioExiste.Excluido = false;
+                    usuarioExiste.Nome = usuarioPostDTO.Nome;
+                    usuarioExiste.PasswordHash = passwordHash;
+                    usuarioExiste.PasswordSalt = passwordSalt;
+                    usuarioExiste.Perfil = usuarioPostDTO.Perfil;
+                    var usuarioDeletadoAtualizado = await _usuarioRepository.UpdateAsync(usuarioExiste);
+                    return new UsuarioGetDTO
+                    {
+                        idUsuario = usuarioDeletadoAtualizado.idUsuario,
+                        Nome = usuarioDeletadoAtualizado.Nome,
+                        Email = usuarioDeletadoAtualizado.Email,
+                        Perfil = usuarioDeletadoAtualizado.Perfil
+                    };
+                }
                 throw new Exception("Já existe um usuario com este Email.");
             }
             var usuarioCriado = await _usuarioRepository.AddAsync(usuario);
@@ -70,6 +86,10 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var listaUsuarios = new List<UsuarioGetDTO>();
             foreach (var usuario in usuarios)
             {
+                if(usuario.Excluido == true)
+                {
+                    continue;
+                }
                 listaUsuarios.Add(new UsuarioGetDTO
                 {
                     idUsuario = usuario.idUsuario,
@@ -104,6 +124,10 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             {
                 return null;
             };
+            if(usuario.Excluido == true)
+            {
+                return null;
+            }
             return new UsuarioGetDTO
             {
                 idUsuario = usuario.idUsuario,
@@ -122,9 +146,24 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Email = usuarioPutDTO.Email,
                 Perfil = usuarioPutDTO.Perfil
             };
-            var usuarioExistente = await _usuarioRepository.GetByEmailAsync(usuario.Email);
-            if (usuarioExistente != null)
+            var usuarioExiste = await _usuarioRepository.GetByEmailAsync(usuario.Email);
+            if (usuarioExiste != null)
             {
+                if(usuarioExiste.Excluido == true)
+                {
+                    usuarioExiste.Excluido = false;
+                    usuarioExiste.Nome = usuarioPutDTO.Nome;
+                    usuarioExiste.Email = usuarioPutDTO.Email;
+                    usuarioExiste.Perfil = usuarioPutDTO.Perfil;
+                    var usuarioDeletadoAtualizado = await _usuarioRepository.UpdateAsync(usuarioExiste);
+                    return new UsuarioGetDTO
+                    {
+                        idUsuario = usuarioDeletadoAtualizado.idUsuario,
+                        Nome = usuarioDeletadoAtualizado.Nome,
+                        Email = usuarioDeletadoAtualizado.Email,
+                        Perfil = usuarioDeletadoAtualizado.Perfil
+                    };
+                }
                 throw new Exception("Já existe um usuario com este Email.");
             };
             var usuarioAtualizado = await _usuarioRepository.UpdateAsync(usuario);

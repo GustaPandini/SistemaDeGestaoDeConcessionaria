@@ -22,11 +22,28 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Nome = clientePostDTO.Nome,
                 CPF = clientePostDTO.CPF,
                 Telefone = clientePostDTO.Telefone,
-                Endereco = clientePostDTO.Endereco
+                Endereco = clientePostDTO.Endereco,
+                Excluido = false
             };
-            var clienteExistente = await _clienteRepository.GetByCPFAsync(cliente.CPF);
-            if(clienteExistente != null)
+            var clienteExiste = await _clienteRepository.GetByCPFAsync(cliente.CPF);
+            if(clienteExiste != null)
             {
+                if(clienteExiste.Excluido == true)
+                {
+                    clienteExiste.Nome = cliente.Nome;
+                    clienteExiste.Telefone = cliente.Telefone;
+                    clienteExiste.Endereco = cliente.Endereco;
+                    clienteExiste.Excluido = false;
+                    var clienteDeletadoAtualizado = await _clienteRepository.UpdateAsync(clienteExiste);
+                    return new ClienteGetDTO
+                    {
+                        idCliente = clienteDeletadoAtualizado.idCliente,
+                        Nome = clienteDeletadoAtualizado.Nome,
+                        CPF = clienteDeletadoAtualizado.CPF,
+                        Telefone = clienteDeletadoAtualizado.Telefone,
+                        Endereco = clienteDeletadoAtualizado.Endereco
+                    };
+                }
                 throw new Exception("Já existe um cliente com este CPF.");
             };
             var clienteAdicionado = await _clienteRepository.AddAsync(cliente);
@@ -64,6 +81,10 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var listaClientes = new List<ClienteGetDTO>();
             foreach (var cliente in clientes)
             {
+                if(cliente.Excluido == true)
+                {
+                    continue;
+                }
                 listaClientes.Add(new ClienteGetDTO
                 {
                     idCliente = cliente.idCliente,
@@ -100,6 +121,10 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             {
                 return null;
             };
+            if(cliente.Excluido == true)
+            {
+                return null;
+            }
             return new ClienteGetDTO
             {
                 idCliente = cliente.idCliente,
@@ -118,11 +143,28 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Nome = clientePutDTO.Nome,
                 CPF = clientePutDTO.CPF,
                 Telefone = clientePutDTO.Telefone,
-                Endereco = clientePutDTO.Endereco
+                Endereco = clientePutDTO.Endereco,
+                Excluido = false
             };
             var clienteExistente = await _clienteRepository.GetByCPFAsync(cliente.CPF);
             if (clienteExistente != null)
             {
+                if(clienteExistente.Excluido == true)
+                {
+                    clienteExistente.Nome = cliente.Nome;
+                    clienteExistente.Telefone = cliente.Telefone;
+                    clienteExistente.Endereco = cliente.Endereco;
+                    clienteExistente.Excluido = false;
+                    var clienteDeletadoAtualizado = await _clienteRepository.UpdateAsync(clienteExistente);
+                    return new ClienteGetDTO
+                    {
+                        idCliente = clienteDeletadoAtualizado.idCliente,
+                        Nome = clienteDeletadoAtualizado.Nome,
+                        CPF = clienteDeletadoAtualizado.CPF,
+                        Telefone = clienteDeletadoAtualizado.Telefone,
+                        Endereco = clienteDeletadoAtualizado.Endereco
+                    };
+                }
                 throw new Exception("Já existe um cliente com este CPF.");
             }
             ;

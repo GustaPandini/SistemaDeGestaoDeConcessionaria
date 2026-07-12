@@ -31,14 +31,15 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
                 return null;
             }
 
-            _context.Venda.Remove(venda);
+            venda.Excluido = true;
+            _context.Venda.Update(venda);
             await _context.SaveChangesAsync();
             return venda;
         }
 
         public async Task<List<Venda>> GetAllAsync()
         {
-            return await _context.Venda.ToListAsync();
+            return await _context.Venda.Where(x => x.Excluido == false).ToListAsync();
         }
 
         public async Task<Venda> GetByIdAsync(int idVenda)

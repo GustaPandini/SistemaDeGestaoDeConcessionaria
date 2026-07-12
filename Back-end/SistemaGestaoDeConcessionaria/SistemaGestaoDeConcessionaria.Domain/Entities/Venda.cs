@@ -14,5 +14,6 @@ namespace SistemaGestaoDeConcessionaria.Domain.Entities
         public int idCliente { get; set; }
         public Automovel Automovel { get; set; }
         public Cliente Cliente { get; set; }
+        public bool Excluido { get; set; }
     }
 }

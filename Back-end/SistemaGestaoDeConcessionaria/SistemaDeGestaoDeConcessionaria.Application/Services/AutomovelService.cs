@@ -32,11 +32,46 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Preco = automovelPostDTO.Preco,
                 Blindado = automovelPostDTO.Blindado,
                 QuantidadeDonos = automovelPostDTO.QuantidadeDonos,
-                Vendido = false
+                Vendido = false,
+                Excluido = false
             };
-            var automovelExistente = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
-            if (automovelExistente != null)
+            var automovelExiste = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
+            if (automovelExiste != null)
             {
+                if(automovelExiste.Excluido == true)
+                {
+                    automovelExiste.Excluido = false;
+                    automovelExiste.Marca = automovel.Marca;
+                    automovelExiste.Modelo = automovel.Modelo;
+                    automovelExiste.Powertrain = automovel.Powertrain;
+                    automovelExiste.Versao = automovel.Versao;
+                    automovelExiste.Cor = automovel.Cor;
+                    automovelExiste.Ano = automovel.Ano;
+                    automovelExiste.AnoModelo = automovel.AnoModelo;
+                    automovelExiste.Quilometragem = automovel.Quilometragem;
+                    automovelExiste.Preco = automovel.Preco;
+                    automovelExiste.Blindado = automovel.Blindado;
+                    automovelExiste.QuantidadeDonos = automovel.QuantidadeDonos;
+                    automovelExiste.Vendido = false;
+                    var automovelAtualizado = await _automovelRepository.UpdateAsync(automovelExiste);
+                    return new AutomovelGetDTO
+                    {
+                        idAutomovel = automovelAtualizado.idAutomovel,
+                        PlacaOuChassi = automovelAtualizado.PlacaOuChassi,
+                        Marca = automovelAtualizado.Marca,
+                        Modelo = automovelAtualizado.Modelo,
+                        Powertrain = automovelAtualizado.Powertrain,
+                        Versao = automovelAtualizado.Versao,
+                        Cor = automovelAtualizado.Cor,
+                        Ano = automovelAtualizado.Ano,
+                        AnoModelo = automovelAtualizado.AnoModelo,
+                        Quilometragem = automovelAtualizado.Quilometragem,
+                        Preco = automovelAtualizado.Preco,
+                        Blindado = automovelAtualizado.Blindado,
+                        QuantidadeDonos = automovelAtualizado.QuantidadeDonos,
+                        Vendido = automovelAtualizado.Vendido
+                    };
+                }
                 throw new Exception("Já existe um automóvel com essa placa ou chassi cadastrado.");
             }
             var automovelAdicionado = await _automovelRepository.AddAsync(automovel);
@@ -91,6 +126,10 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var listaAutomoveis = new List<AutomovelGetDTO>();
             foreach (var automovel in automoveis)
             {
+                if(automovel.Excluido == true)
+                {
+                    continue;
+                }
                 listaAutomoveis.Add(new AutomovelGetDTO
                 {
                     idAutomovel = automovel.idAutomovel,
@@ -119,6 +158,10 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             {
                 return null;
             };
+            if(automovel.Excluido == true)
+            {
+                return null;
+            }
             return new AutomovelGetDTO
             {
                 idAutomovel = automovel.idAutomovel,
@@ -182,9 +225,43 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 QuantidadeDonos = automovelPutDTO.QuantidadeDonos,
                 Vendido = automovelPutDTO.Vendido
             };
-            var automovelExistente = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
-            if (automovelExistente != null)
+            var automovelExiste = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
+            if (automovelExiste != null)
             {
+                if(automovelExiste.Excluido == true)
+                {
+                    automovelExiste.Excluido = false;
+                    automovelExiste.Marca = automovel.Marca;
+                    automovelExiste.Modelo = automovel.Modelo;
+                    automovelExiste.Powertrain = automovel.Powertrain;
+                    automovelExiste.Versao = automovel.Versao;
+                    automovelExiste.Cor = automovel.Cor;
+                    automovelExiste.Ano = automovel.Ano;
+                    automovelExiste.AnoModelo = automovel.AnoModelo;
+                    automovelExiste.Quilometragem = automovel.Quilometragem;
+                    automovelExiste.Preco = automovel.Preco;
+                    automovelExiste.Blindado = automovel.Blindado;
+                    automovelExiste.QuantidadeDonos = automovel.QuantidadeDonos;
+                    automovelExiste.Vendido = automovel.Vendido;
+                    var automovelDeletadoAtualizado = await _automovelRepository.UpdateAsync(automovelExiste);
+                    return new AutomovelGetDTO
+                    {
+                        idAutomovel = automovelDeletadoAtualizado.idAutomovel,
+                        PlacaOuChassi = automovelDeletadoAtualizado.PlacaOuChassi,
+                        Marca = automovelDeletadoAtualizado.Marca,
+                        Modelo = automovelDeletadoAtualizado.Modelo,
+                        Powertrain = automovelDeletadoAtualizado.Powertrain,
+                        Versao = automovelDeletadoAtualizado.Versao,
+                        Cor = automovelDeletadoAtualizado.Cor,
+                        Ano = automovelDeletadoAtualizado.Ano,
+                        AnoModelo = automovelDeletadoAtualizado.AnoModelo,
+                        Quilometragem = automovelDeletadoAtualizado.Quilometragem,
+                        Preco = automovelDeletadoAtualizado.Preco,
+                        Blindado = automovelDeletadoAtualizado.Blindado,
+                        QuantidadeDonos = automovelDeletadoAtualizado.QuantidadeDonos,
+                        Vendido = automovelDeletadoAtualizado.Vendido
+                    };
+                }
                 throw new Exception("Já existe um automóvel com essa placa ou chassi cadastrado.");
             }
             var automovelAtualizado = await _automovelRepository.UpdateAsync(automovel);

@@ -11,5 +11,6 @@ namespace SistemaGestaoDeConcessionaria.Domain.Entities
         public string CPF { get; set; }
         public string Telefone { get; set; }
         public string Endereco { get; set; }
+        public bool Excluido { get; set; }
     }
 }

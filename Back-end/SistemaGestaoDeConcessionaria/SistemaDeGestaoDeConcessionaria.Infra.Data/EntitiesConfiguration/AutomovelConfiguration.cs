@@ -45,6 +45,8 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.EntitiesConfiguration
                 .IsRequired();
             builder.Property(a => a.Vendido)
                 .IsRequired();
+            builder.Property(a => a.Excluido)
+                .IsRequired();
         }
     }
 }

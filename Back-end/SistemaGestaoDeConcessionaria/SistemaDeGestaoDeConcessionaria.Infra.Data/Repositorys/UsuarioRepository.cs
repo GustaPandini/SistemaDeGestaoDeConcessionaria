@@ -32,14 +32,15 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
                 return null;
             }
 
-            _context.Usuario.Remove(usuario);
+            usuario.Excluido = true;
+            _context.Usuario.Update(usuario);
             await _context.SaveChangesAsync();
             return usuario;
         }
 
         public async Task<List<Usuario>> GetAllAsync()
         {
-            return await _context.Usuario.ToListAsync();
+            return await _context.Usuario.Where(x => x.Excluido == false).ToListAsync();
         }
 
         public async Task<Usuario> GetByEmailAsync(string email)

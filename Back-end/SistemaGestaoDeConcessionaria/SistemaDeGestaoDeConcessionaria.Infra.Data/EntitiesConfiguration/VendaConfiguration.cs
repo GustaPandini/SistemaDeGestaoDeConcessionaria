@@ -32,6 +32,8 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.EntitiesConfiguration
                 .WithMany()
                 .HasForeignKey(v => v.idCliente)
                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Property(v => v.Excluido)
+                .IsRequired();
         }
     }
 }

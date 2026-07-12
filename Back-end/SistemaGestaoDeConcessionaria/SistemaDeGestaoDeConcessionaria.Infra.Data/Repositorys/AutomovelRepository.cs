@@ -32,14 +32,15 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
                 return null;
             }
 
-            _context.Automovel.Remove(automovel);
+            automovel.Excluido = true;
+            _context.Automovel.Update(automovel);
             await _context.SaveChangesAsync();
             return automovel;
         }
 
         public async Task<List<Automovel>> GetAllAsync()
         {
-            return await _context.Automovel.ToListAsync();
+            return await _context.Automovel.Where(x => x.Excluido == false).ToListAsync();
         }
 
         public async Task<Automovel> GetByIdAsync(int idAutomovel)

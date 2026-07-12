@@ -20,5 +20,6 @@ namespace SistemaGestaoDeConcessionaria.Domain.Entities
         public bool Blindado { get; set; }
         public int QuantidadeDonos { get; set; }
         public bool Vendido { get; set; }
+        public bool Excluido { get; set; }
     }
 }
