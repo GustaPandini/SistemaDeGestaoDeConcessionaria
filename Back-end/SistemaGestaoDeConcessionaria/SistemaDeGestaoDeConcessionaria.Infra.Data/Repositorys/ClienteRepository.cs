@@ -44,7 +44,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 
         public async Task<Cliente> GetByCPFAsync(string CPF)
         {
-            return await _context.Cliente.FindAsync(CPF);
+            return await _context.Cliente.AsNoTracking().FirstOrDefaultAsync(c => c.CPF == CPF);
         }
 
         public async Task<Cliente> GetByIdAsync(int idCliente)

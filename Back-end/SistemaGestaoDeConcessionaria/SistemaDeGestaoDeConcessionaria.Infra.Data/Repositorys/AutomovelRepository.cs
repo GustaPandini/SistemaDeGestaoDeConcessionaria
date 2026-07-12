@@ -50,7 +50,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 
         public async Task<Automovel> GetByPlacaOuChassiAsync(string placaOuChassi)
         {
-            return await _context.Automovel.FindAsync(placaOuChassi);
+            return await _context.Automovel.AsNoTracking().FirstOrDefaultAsync(a => a.PlacaOuChassi == placaOuChassi);
         }
 
         public async Task<Automovel> UpdateAsync(Automovel automovel)

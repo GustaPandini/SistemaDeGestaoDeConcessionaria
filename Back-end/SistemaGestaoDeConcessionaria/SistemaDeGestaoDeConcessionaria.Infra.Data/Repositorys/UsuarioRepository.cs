@@ -45,7 +45,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 
         public async Task<Usuario> GetByEmailAsync(string email)
         {
-            return await _context.Usuario.FindAsync(email);
+            return await _context.Usuario.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<Usuario> GetByIdAsync(int idUsuario)

@@ -39,6 +39,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 
         public async Task<List<Venda>> GetAllAsync()
         {
+            _context.Venda.Include(x => x.Automovel).Include(x => x.Cliente);
             return await _context.Venda.Where(x => x.Excluido == false).ToListAsync();
         }
 

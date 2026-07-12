@@ -62,38 +62,40 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
         {
             var vendas = await _vendaRepository.GetAllAsync();
             var listaVendasDetail = new List<VendaGetDetailDTO>();
-            listaVendasDetail.AddRange(vendas.Select(venda => new VendaGetDetailDTO
-            {
-                idVenda = venda.idVenda,
-                DataDaVenda = venda.DataDaVenda,
-                ValorPago = venda.ValorPago,
-                FormaDePagamento = venda.FormaDePagamento,
-                Automovel = new AutomovelGetDTO
+            listaVendasDetail.AddRange(vendas
+                .Where(venda => !venda.Excluido)
+                .Select(venda => new VendaGetDetailDTO
                 {
-                    idAutomovel = venda.Automovel.idAutomovel,
-                    PlacaOuChassi = venda.Automovel.PlacaOuChassi,
-                    Marca = venda.Automovel.Marca,
-                    Modelo = venda.Automovel.Modelo,
-                    Powertrain = venda.Automovel.Powertrain,
-                    Versao = venda.Automovel.Versao,
-                    Cor = venda.Automovel.Cor,
-                    Ano = venda.Automovel.Ano,
-                    AnoModelo = venda.Automovel.AnoModelo,
-                    Quilometragem = venda.Automovel.Quilometragem,
-                    Preco = venda.Automovel.Preco,
-                    Blindado = venda.Automovel.Blindado,
-                    QuantidadeDonos = venda.Automovel.QuantidadeDonos,
-                    Vendido = venda.Automovel.Vendido
-                },
-                Cliente = new ClienteGetDTO
-                {
-                    idCliente = venda.Cliente.idCliente,
-                    Nome = venda.Cliente.Nome,
-                    CPF = venda.Cliente.CPF,
-                    Telefone = venda.Cliente.Telefone,
-                    Endereco = venda.Cliente.Endereco
-                }
-            }));
+                    idVenda = venda.idVenda,
+                    DataDaVenda = venda.DataDaVenda,
+                    ValorPago = venda.ValorPago,
+                    FormaDePagamento = venda.FormaDePagamento,
+                    Automovel = new AutomovelGetDTO
+                    {
+                        idAutomovel = venda.Automovel.idAutomovel,
+                        PlacaOuChassi = venda.Automovel.PlacaOuChassi,
+                        Marca = venda.Automovel.Marca,
+                        Modelo = venda.Automovel.Modelo,
+                        Powertrain = venda.Automovel.Powertrain,
+                        Versao = venda.Automovel.Versao,
+                        Cor = venda.Automovel.Cor,
+                        Ano = venda.Automovel.Ano,
+                        AnoModelo = venda.Automovel.AnoModelo,
+                        Quilometragem = venda.Automovel.Quilometragem,
+                        Preco = venda.Automovel.Preco,
+                        Blindado = venda.Automovel.Blindado,
+                        QuantidadeDonos = venda.Automovel.QuantidadeDonos,
+                        Vendido = venda.Automovel.Vendido
+                    },
+                    Cliente = new ClienteGetDTO
+                    {
+                        idCliente = venda.Cliente.idCliente,
+                        Nome = venda.Cliente.Nome,
+                        CPF = venda.Cliente.CPF,
+                        Telefone = venda.Cliente.Telefone,
+                        Endereco = venda.Cliente.Endereco
+                    }
+                }));
             return listaVendasDetail;
         }
 
@@ -103,8 +105,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             if (venda == null)
             {
                 return null;
-            };
-            if(venda.Excluido == true)
+            }
+            ;
+            if (venda.Excluido == true)
             {
                 return null;
             }

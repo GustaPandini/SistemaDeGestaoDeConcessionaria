@@ -147,7 +147,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Excluido = false
             };
             var clienteExistente = await _clienteRepository.GetByCPFAsync(cliente.CPF);
-            if (clienteExistente != null)
+            if (clienteExistente != null && clienteExistente.idCliente != cliente.idCliente)
             {
                 if(clienteExistente.Excluido == true)
                 {

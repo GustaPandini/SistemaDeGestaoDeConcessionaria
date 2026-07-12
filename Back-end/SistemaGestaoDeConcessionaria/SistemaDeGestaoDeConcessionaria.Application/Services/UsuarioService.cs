@@ -31,7 +31,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Email = usuarioPostDTO.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Perfil = usuarioPostDTO.Perfil
+                Perfil = usuarioPostDTO.Perfil,
+                Excluido = false
             };
             var usuarioExiste = await _usuarioRepository.GetByEmailAsync(usuario.Email);
             if(usuarioExiste != null)
