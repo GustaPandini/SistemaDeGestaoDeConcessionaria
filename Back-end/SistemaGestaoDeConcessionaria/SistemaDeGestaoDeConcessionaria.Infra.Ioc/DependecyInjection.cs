@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
+using SistemaDeGestaoDeConcessionaria.Application.Services;
 using SistemaDeGestaoDeConcessionaria.Infra.Data.Context;
 using SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
@@ -25,6 +27,11 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Ioc
             services.AddScoped<IAutomovelRepository, AutomovelRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IVendaRepository, VendaRepository>();
+
+            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IAutomovelService, AutomovelService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IVendaService, VendaService>();
 
             return services;
 
