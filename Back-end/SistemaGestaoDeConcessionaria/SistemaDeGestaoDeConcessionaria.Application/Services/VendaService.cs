@@ -24,8 +24,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 DataDaVenda = vendaPostDTO.DataDaVenda,
                 ValorPago = vendaPostDTO.ValorPago,
                 FormaDePagamento = vendaPostDTO.FormaDePagamento,
-                idAutomovel = vendaPostDTO.idCliente,
-                idCliente = vendaPostDTO.idAutomovel,
+                idAutomovel = vendaPostDTO.idAutomovel,
+                idCliente = vendaPostDTO.idCliente,
                 Excluido = false
             };
             var vendaAdicionada = await _vendaRepository.AddAsync(venda);
