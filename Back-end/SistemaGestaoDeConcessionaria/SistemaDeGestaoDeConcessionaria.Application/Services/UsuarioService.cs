@@ -148,7 +148,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Perfil = usuarioPutDTO.Perfil
             };
             var usuarioExiste = await _usuarioRepository.GetByEmailAsync(usuario.Email);
-            if (usuarioExiste != null)
+            if (usuarioExiste != null && usuarioExiste.idUsuario != usuario.idUsuario)
             {
                 if(usuarioExiste.Excluido == true)
                 {

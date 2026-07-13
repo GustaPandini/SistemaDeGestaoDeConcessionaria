@@ -7,7 +7,7 @@ namespace SistemaGestaoDeConcessionaria.Domain.Entities
     public class Venda
     {
         public int idVenda { get; set; }
-        public DateTime DataDaVenda { get; set; }
+        public DateOnly DataDaVenda { get; set; }
         public decimal ValorPago { get; set; }
         public string FormaDePagamento { get; set; }
         public int idAutomovel { get; set; }

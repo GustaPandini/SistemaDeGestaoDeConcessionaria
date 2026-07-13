@@ -8,7 +8,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.DTOs.Venda
     public class VendaPostDTO
     {
         [Required(ErrorMessage = "É obrigatório informar a data da venda.")]
-        public DateTime DataDaVenda { get; set; }
+        public DateOnly DataDaVenda { get; set; }
         [Required(ErrorMessage = "É obrigatório informar o valor pago pelo automovel.")]
         public decimal ValorPago { get; set; }
         [Required(ErrorMessage = "É obrigatório informar a forma de pagamento.")]

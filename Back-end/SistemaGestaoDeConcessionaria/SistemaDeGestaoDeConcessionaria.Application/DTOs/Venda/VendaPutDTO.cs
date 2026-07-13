@@ -10,7 +10,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.DTOs.Venda
         [Required(ErrorMessage = "É obrigatório informar o ID da venda que você quer alterar.")]
         public int idVenda { get; set; }
         [Required(ErrorMessage = "É obrigatório informar a data da venda.")]
-        public DateOnly DataDaVenda { get; set; }
+        public DateTime DataDaVenda { get; set; }
         [Required(ErrorMessage = "É obrigatório informar o valor pago pelo automovel.")]
         public decimal ValorPago { get; set; }
         [Required(ErrorMessage = "É obrigatório informar a forma de pagamento.")]

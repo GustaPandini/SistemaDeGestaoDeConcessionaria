@@ -211,6 +211,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
         {
             var automovel = new Automovel
             {
+                idAutomovel = automovelPutDTO.idAutomovel,
                 PlacaOuChassi = automovelPutDTO.PlacaOuChassi,
                 Marca = automovelPutDTO.Marca,
                 Modelo = automovelPutDTO.Modelo,
@@ -226,7 +227,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Vendido = automovelPutDTO.Vendido
             };
             var automovelExiste = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
-            if (automovelExiste != null)
+            if (automovelExiste != null && automovelExiste.idAutomovel != automovel.idAutomovel)
             {
                 if(automovelExiste.Excluido == true)
                 {
