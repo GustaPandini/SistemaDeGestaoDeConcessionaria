@@ -39,13 +39,18 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 
         public async Task<List<Venda>> GetAllAsync()
         {
-            _context.Venda.Include(x => x.Automovel).Include(x => x.Cliente);
-            return await _context.Venda.Where(x => x.Excluido == false).ToListAsync();
+            return await _context.Venda
+                .Include(x => x.Automovel)
+                .Include(x => x.Cliente)
+                .Where(x => x.Excluido == false).ToListAsync();
         }
 
         public async Task<Venda> GetByIdAsync(int idVenda)
         {
-            return await _context.Venda.FindAsync(idVenda);
+            return await _context.Venda
+                .Include(x => x.Automovel)
+                .Include(x => x.Cliente)
+                .FirstOrDefaultAsync(x => x.idVenda == idVenda);
         }
 
         public async Task<Venda> UpdateAsync(Venda venda)
