@@ -7,18 +7,31 @@ using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SistemaDeGestaoDeConcessionaria.Application.Services
 {
     public class VendaService : IVendaService
     {
         private readonly IVendaRepository _vendaRepository;
-        public VendaService(IVendaRepository vendaRepository)
+        private readonly IAutomovelRepository _automovelRepository;
+        public VendaService(IVendaRepository vendaRepository, IAutomovelRepository automovelRepository)
         {
             _vendaRepository = vendaRepository;
+            _automovelRepository = automovelRepository;
         }
         public async Task<VendaGetDTO> AddAsync(VendaPostDTO vendaPostDTO)
         {
+            var automovel = await _automovelRepository.GetByIdAsync(vendaPostDTO.idAutomovel);
+            if (automovel == null || automovel.Excluido)
+            {
+                throw new Exception("Automóvel não encontrado");
+            }
+            if(automovel.Vendido)
+            {
+                throw new Exception("Este automóvel já foi vendido e não pode ser cadastrado em uma nova venda!");
+            }
+
             var venda = new Venda
             {
                 DataDaVenda = vendaPostDTO.DataDaVenda,
@@ -29,6 +42,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Excluido = false
             };
             var vendaAdicionada = await _vendaRepository.AddAsync(venda);
+            automovel.Vendido = true;
+            await _automovelRepository.UpdateAsync(automovel);
             return new VendaGetDTO
             {
                 idVenda = vendaAdicionada.idVenda,
@@ -47,6 +62,14 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             {
                 return null;
             }
+
+            var automovel = await _automovelRepository.GetByIdAsync(vendaDeletada.idAutomovel);
+            if(automovel != null)
+            {
+                automovel.Vendido = false;
+                await _automovelRepository.UpdateAsync(automovel);
+            }
+
             return new VendaGetDTO
             {
                 idVenda = vendaDeletada.idVenda,
