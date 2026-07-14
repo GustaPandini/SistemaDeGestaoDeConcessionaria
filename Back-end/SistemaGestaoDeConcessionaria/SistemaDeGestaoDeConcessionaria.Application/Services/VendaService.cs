@@ -172,6 +172,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
         {
             var venda = new Venda
             {
+                idVenda = vendaPutDTO.idVenda,
                 DataDaVenda = vendaPutDTO.DataDaVenda,
                 ValorPago = vendaPutDTO.ValorPago,
                 FormaDePagamento = vendaPutDTO.FormaDePagamento,
