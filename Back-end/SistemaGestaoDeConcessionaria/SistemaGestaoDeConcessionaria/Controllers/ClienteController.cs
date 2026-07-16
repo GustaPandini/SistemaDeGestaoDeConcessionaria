@@ -17,41 +17,24 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
         public async Task<ActionResult> AddCliente(ClientePostDTO clientePostDTO)
         {
             var clienteAdicionado = await _clienteService.AddAsync(clientePostDTO);
-            if (clienteAdicionado == null)
-            {
-                return BadRequest("Não foi possível adicionar o cliente.");
-
-            }
             return Ok(new { message = "Cliente íncluido com sucesso!" });
         }
         [HttpPut]
         public async Task<ActionResult> UpdateCliente(ClientePutDTO clientePutDTO)
         {
             var clienteAtualizado = await _clienteService.UpdateAsync(clientePutDTO);
-            if (clienteAtualizado == null)
-            {
-                return BadRequest("Ocorreu um erro ao alterar esse cliente!.");
-            }
             return Ok(new { message = "Cliente atualizado com sucesso!" });
         }
         [HttpDelete("{idCliente}")]
         public async Task<ActionResult> DeleteCliente(int idCliente)
         {
             var clienteDeletado = await _clienteService.DeleteAsync(idCliente);
-            if (clienteDeletado == null)
-            {
-                return NotFound("Cliente não encontrado.");
-            }
             return Ok(new { message = "Cliente deletado com sucesso!" });
         }
         [HttpGet("{idCliente}")]
         public async Task<ActionResult> GetClienteById(int idCliente)
         {
             var cliente = await _clienteService.GetByIdAsync(idCliente);
-            if (cliente == null)
-            {
-                return NotFound("Cliente não encontrado.");
-            }
             return Ok(cliente);
         }
         [HttpGet]

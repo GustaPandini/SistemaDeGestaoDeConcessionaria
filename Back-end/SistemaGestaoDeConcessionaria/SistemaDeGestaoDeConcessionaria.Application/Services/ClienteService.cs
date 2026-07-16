@@ -1,5 +1,6 @@
 ﻿using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
+using SistemaGestaoDeConcessionaria.Application.Execptions;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
@@ -63,7 +64,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var clienteDeletado = await _clienteRepository.DeleteAsync(idCliente);
             if (clienteDeletado == null)
             {
-                return null;
+                throw new NotFoundExecption("Cliente não encontrado.");
             }
             return new ClienteGetDTO
             {
@@ -102,8 +103,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var cliente = await _clienteRepository.GetByCPFAsync(CPF);
             if (cliente == null)
             {
-                return null;
-            };
+                throw new NotFoundExecption("Cliente não encontrado.");
+            }
+            ;
             return new ClienteGetDTO
             {
                 idCliente = cliente.idCliente,
@@ -119,8 +121,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var cliente = await _clienteRepository.GetByIdAsync(idCliente);
             if(cliente == null)
             {
-                return null;
-            };
+                throw new NotFoundExecption("Cliente não encontrado.");
+            }
+            ;
             if(cliente.Excluido == true)
             {
                 return null;

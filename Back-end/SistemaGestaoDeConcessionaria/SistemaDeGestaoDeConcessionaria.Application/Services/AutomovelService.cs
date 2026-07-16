@@ -1,6 +1,7 @@
 ﻿using SistemaDeGestaoDeConcessionaria.Application.DTOs.Automovel;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
+using SistemaGestaoDeConcessionaria.Application.Execptions;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
@@ -99,7 +100,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var automovelDeletado = await _automovelRepository.DeleteAsync(idAutomovel);
             if (automovelDeletado == null)
             {
-                return null;
+                throw new NotFoundExecption("Automóvel não encontrado.");
             }
             return new AutomovelGetDTO
             {
@@ -156,8 +157,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var automovel = await _automovelRepository.GetByIdAsync(idAutomovel);
             if (automovel == null)
             {
-                return null;
-            };
+                throw new NotFoundExecption("Automóvel não encontrado.");
+            }
+            ;
             if(automovel.Excluido == true)
             {
                 return null;
@@ -186,7 +188,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var automovel = await _automovelRepository.GetByPlacaOuChassiAsync(placaOuChassi);
             if (automovel == null)
             {
-                return null;
+                throw new NotFoundExecption("Automóvel não encontrado.");
             }
             return new AutomovelGetDTO
             {

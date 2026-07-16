@@ -1,5 +1,6 @@
 using Microsoft.OpenApi;
 using SistemaDeGestaoDeConcessionaria.Infra.Ioc;
+using SistemaGestaoDeConcessionaria.API.Middlewear;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<ExcecptionMiddlewear>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -2,6 +2,7 @@
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Venda;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
+using SistemaGestaoDeConcessionaria.Application.Execptions;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
@@ -25,9 +26,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var automovel = await _automovelRepository.GetByIdAsync(vendaPostDTO.idAutomovel);
             if (automovel == null || automovel.Excluido)
             {
-                throw new Exception("Automóvel não encontrado");
+                throw new NotFoundExecption("Automóvel não encontrado!");
             }
-            if(automovel.Vendido)
+            if (automovel.Vendido)
             {
                 throw new Exception("Este automóvel já foi vendido e não pode ser cadastrado em uma nova venda!");
             }
@@ -60,11 +61,11 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var vendaDeletada = await _vendaRepository.DeleteAsync(idVenda);
             if (vendaDeletada == null)
             {
-                return null;
+                throw new NotFoundExecption("Venda não encontrada.");
             }
 
             var automovel = await _automovelRepository.GetByIdAsync(vendaDeletada.idAutomovel);
-            if(automovel != null)
+            if (automovel != null)
             {
                 automovel.Vendido = false;
                 await _automovelRepository.UpdateAsync(automovel);
@@ -127,7 +128,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var venda = await _vendaRepository.GetByIdAsync(idVenda);
             if (venda == null)
             {
-                return null;
+                throw new NotFoundExecption("Venda não encontrada.");
             }
             ;
             if (venda.Excluido == true)
@@ -170,15 +171,24 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
 
         public async Task<VendaGetDTO> UpdateAsync(VendaPutDTO vendaPutDTO)
         {
-            var venda = new Venda
+            var venda = await _vendaRepository.GetByIdAsync(vendaPutDTO.idVenda);
+            if (venda == null)
             {
-                idVenda = vendaPutDTO.idVenda,
-                DataDaVenda = vendaPutDTO.DataDaVenda,
-                ValorPago = vendaPutDTO.ValorPago,
-                FormaDePagamento = vendaPutDTO.FormaDePagamento,
-                idAutomovel = vendaPutDTO.idCliente,
-                idCliente = vendaPutDTO.idAutomovel
-            };
+                throw new NotFoundExecption("Venda não encontrada.");
+            }
+            var automovel = await _automovelRepository.GetByIdAsync(vendaPutDTO.idAutomovel);
+            if (automovel == null || automovel.Excluido)
+            {
+                throw new NotFoundExecption("Automóvel não encontrado!");
+            }
+
+            venda.idVenda = vendaPutDTO.idVenda;
+            venda.DataDaVenda = vendaPutDTO.DataDaVenda;
+            venda.ValorPago = vendaPutDTO.ValorPago;
+            venda.FormaDePagamento = vendaPutDTO.FormaDePagamento;
+            venda.idAutomovel = vendaPutDTO.idCliente;
+            venda.idCliente = vendaPutDTO.idAutomovel;
+
             var vendaAtualizada = await _vendaRepository.UpdateAsync(venda);
             if (vendaAtualizada == null)
             {

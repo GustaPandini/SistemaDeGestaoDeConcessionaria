@@ -2,6 +2,7 @@
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Usuario;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Venda;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
+using SistemaGestaoDeConcessionaria.Application.Execptions;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
 using System;
@@ -70,7 +71,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var usuarioDeletado = await _usuarioRepository.DeleteAsync(idUsuario);
             if (usuarioDeletado == null)
             {
-                return null;
+                throw new NotFoundExecption("Usuário não encontrado.");
             }
             return new UsuarioGetDTO
             {
@@ -107,8 +108,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var usuario = await _usuarioRepository.GetByEmailAsync(email);
             if (usuario == null)
             {
-                return null;
-            };
+                throw new NotFoundExecption("Usuário não encontrado.");
+            }
+            ;
             return new UsuarioGetDTO
             {
                 idUsuario = usuario.idUsuario,
@@ -123,8 +125,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             var usuario = await _usuarioRepository.GetByIdAsync(idUsuario);
             if (usuario == null)
             {
-                return null;
-            };
+                throw new NotFoundExecption("Usuário não encontrado.");
+            }
+            ;
             if(usuario.Excluido == true)
             {
                 return null;
@@ -171,7 +174,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             if (usuarioAtualizado == null)
             {
                 return null;
-            };
+            }
+            ;
             return new UsuarioGetDTO
             {
                 idUsuario = usuarioAtualizado.idUsuario,
