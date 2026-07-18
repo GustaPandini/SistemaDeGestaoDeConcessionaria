@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
 
@@ -6,6 +7,7 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ClienteController : Controller
     {
         private readonly IClienteService _clienteService;
