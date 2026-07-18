@@ -10,7 +10,7 @@ namespace SistemaGestaoDeConcessionaria.API.Middlewear
         private readonly ILogger<ExcecptionMiddlewear> _logger;
         private readonly IHostEnvironment _env;
 
-        private ExcecptionMiddlewear(RequestDelegate next, ILogger<ExcecptionMiddlewear> logger, IHostEnvironment env)
+        public ExcecptionMiddlewear(RequestDelegate next, ILogger<ExcecptionMiddlewear> logger, IHostEnvironment env)
         {
             _next = next;
             _logger = logger;

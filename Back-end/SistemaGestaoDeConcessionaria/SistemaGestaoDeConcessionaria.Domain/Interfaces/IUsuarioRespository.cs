@@ -13,5 +13,6 @@ namespace SistemaGestaoDeConcessionaria.Domain.Interfaces
         Task<Usuario> AddAsync(Usuario usuario);
         Task<Usuario> UpdateAsync(Usuario usuario);
         Task<Usuario> DeleteAsync(int idUsuario);
+        Task<bool> ExistsUsuarioAsync();
     }
 }

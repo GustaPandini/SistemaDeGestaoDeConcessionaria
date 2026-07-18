@@ -14,5 +14,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Interfaces
         Task<UsuarioGetDTO> AddAsync(UsuarioPostDTO usuarioPostDTO);
         Task<UsuarioGetDTO> UpdateAsync(UsuarioPutDTO usuarioPutDTO);
         Task<UsuarioGetDTO> DeleteAsync(int idUsuario);
+        Task<bool> ExistsUsuarioAsync();
     }
 }
