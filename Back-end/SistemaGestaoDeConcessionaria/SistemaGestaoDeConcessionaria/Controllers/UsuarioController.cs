@@ -47,12 +47,5 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             var token = _authenticate.GenerateToken(usuario.idUsuario, usuario.Email.ToLower(), usuario.Perfil);
             return Ok(new { Nome = usuario.Nome, Token = token });
         }
-
-        [HttpGet("Teste")]
-        [Authorize]
-        public async Task<ActionResult> Teste()
-        {
-            return Ok(new {message = "Autenticado"});
-        }
     }
 }
