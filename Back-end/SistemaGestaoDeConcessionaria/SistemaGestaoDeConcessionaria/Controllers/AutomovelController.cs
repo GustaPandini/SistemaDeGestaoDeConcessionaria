@@ -53,6 +53,12 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             return Ok(automovel);
         }
 
+        [HttpGet("Deslogado")]
+        public async Task<ActionResult> GetAllDeslogadoAsync()
+        {
+            var automovel = await _automovelService.GetAllDeslogadoAsync();
+            return Ok(automovel);
+        }
 
     }
 }

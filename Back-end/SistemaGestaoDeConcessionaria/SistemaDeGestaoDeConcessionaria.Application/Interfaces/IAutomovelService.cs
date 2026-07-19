@@ -14,5 +14,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Interfaces
         Task<AutomovelGetDTO> AddAsync(AutomovelPostDTO automovelPostDTO);
         Task<AutomovelGetDTO> UpdateAsync(AutomovelPutDTO automovelPutDTO);
         Task<AutomovelGetDTO> DeleteAsync(int idAutomovel);
+        Task<List<AutomovelGetDTO>> GetAllDeslogadoAsync();
     }
 }

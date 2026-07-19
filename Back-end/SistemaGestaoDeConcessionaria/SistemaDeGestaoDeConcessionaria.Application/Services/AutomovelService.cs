@@ -152,6 +152,37 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             return listaAutomoveis;
         }
 
+        public async Task<List<AutomovelGetDTO>> GetAllDeslogadoAsync()
+        {
+            var automoveis = await _automovelRepository.GetAllAsync();
+            var listaAutomoveis = new List<AutomovelGetDTO>();
+            foreach (var automovel in automoveis)
+            {
+                if (automovel.Excluido == true)
+                {
+                    continue;
+                }
+                listaAutomoveis.Add(new AutomovelGetDTO
+                {
+                    idAutomovel = automovel.idAutomovel,
+                    PlacaOuChassi = null,
+                    Marca = automovel.Marca,
+                    Modelo = automovel.Modelo,
+                    Powertrain = automovel.Powertrain,
+                    Versao = automovel.Versao,
+                    Cor = automovel.Cor,
+                    Ano = automovel.Ano,
+                    AnoModelo = automovel.AnoModelo,
+                    Quilometragem = automovel.Quilometragem,
+                    Preco = automovel.Preco,
+                    Blindado = automovel.Blindado,
+                    QuantidadeDonos = automovel.QuantidadeDonos,
+                    Vendido = automovel.Vendido
+                });
+            }
+            return listaAutomoveis;
+        }
+
         public async Task<AutomovelGetDTO> GetByIdAsync(int idAutomovel)
         {
             var automovel = await _automovelRepository.GetByIdAsync(idAutomovel);
