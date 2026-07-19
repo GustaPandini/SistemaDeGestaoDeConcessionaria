@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
+using SistemaGestaoDeConcessionaria.API.Extensions;
+using SistemaGestaoDeConcessionaria.API.Models;
 
 namespace SistemaGestaoDeConcessionaria.API.Controllers
 {
@@ -40,9 +42,12 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             return Ok(cliente);
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllClientes()
+        public async Task<ActionResult> GetAllClientes([FromQuery] PaginationParams paginationParams)
         {
-            var clientes = await _clienteService.GetAllAsync();
+            var clientes = await _clienteService.GetAllAsync(paginationParams.PageNumber, paginationParams.PageSize);
+
+            Response.AddPaginationHeader
+                (new PaginationHeader(paginationParams.PageNumber, paginationParams.PageSize, clientes.TotalCount, clientes.TotalPages));
             return Ok(clientes);
         }
     }

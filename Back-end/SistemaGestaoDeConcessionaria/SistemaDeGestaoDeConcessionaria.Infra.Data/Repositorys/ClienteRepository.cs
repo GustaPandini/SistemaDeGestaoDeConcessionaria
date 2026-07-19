@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using SistemaGestaoDeConcessionaria.Domain.Pagination;
+using SistemaDeGestaoDeConcessionaria.Infra.Data.Helpers;
 
 namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 {
@@ -37,9 +39,10 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
             return cliente;
         }
 
-        public async Task<List<Cliente>> GetAllAsync()
+        public async Task<PagedList<Cliente>> GetAllAsync(int pageNumber, int pageSize)
         {
-            return await _context.Cliente.Where(x => x.Excluido == false).ToListAsync();
+            var query = _context.Cliente.Where(x => x.Excluido == false).AsNoTracking();
+            return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
         }
 
         public async Task<Cliente> GetByCPFAsync(string CPF)

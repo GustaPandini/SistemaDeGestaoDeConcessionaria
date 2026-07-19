@@ -3,6 +3,7 @@ using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
 using SistemaGestaoDeConcessionaria.Application.Execptions;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
+using SistemaGestaoDeConcessionaria.Domain.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -76,9 +77,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             };
         }
 
-        public async Task<List<ClienteGetDTO>> GetAllAsync()
+        public async Task<PagedList<ClienteGetDTO>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var clientes = await _clienteRepository.GetAllAsync();
+            var clientes = await _clienteRepository.GetAllAsync(pageNumber, pageSize);
             var listaClientes = new List<ClienteGetDTO>();
             foreach (var cliente in clientes)
             {
@@ -95,7 +96,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                     Endereco = cliente.Endereco
                 });
             }
-            return listaClientes;
+            return new PagedList<ClienteGetDTO>(listaClientes, clientes.CurrentPage, clientes.PageSize, clientes.TotalCount);
         }
 
         public async Task<ClienteGetDTO> GetByCPFAsync(string CPF)
