@@ -26,8 +26,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             byte[] passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(usuarioPostDTO.Senha));
             byte[] passwordSalt = hmac.Key;
 
-            var existeUsuario = await _usuarioRepository.ExistsUsuarioAsync();
-
             var usuario = new Usuario
             {
                 Nome = usuarioPostDTO.Nome,
@@ -35,7 +33,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Excluido = false,
-                Perfil = existeUsuario ? "Usuario" : "Administrador"
+                Perfil = "Administrador"
             };
             var usuarioExiste = await _usuarioRepository.GetByEmailAsync(usuario.Email);
             if(usuarioExiste != null)
@@ -46,7 +44,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                     usuarioExiste.Nome = usuarioPostDTO.Nome;
                     usuarioExiste.PasswordHash = passwordHash;
                     usuarioExiste.PasswordSalt = passwordSalt;
-                    usuarioExiste.Perfil = existeUsuario ? "Usuario" : "Administrador";
+                    usuarioExiste.Perfil = "Administrador";
                     var usuarioDeletadoAtualizado = await _usuarioRepository.UpdateAsync(usuarioExiste);
                     return new UsuarioGetDTO
                     {
@@ -82,11 +80,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Email = usuarioDeletado.Email,
                 Perfil = usuarioDeletado.Perfil
             };
-        }
-
-        public async Task<bool> ExistsUsuarioAsync()
-        {
-            return await _usuarioRepository.ExistsUsuarioAsync();
         }
 
         public async Task<List<UsuarioGetDTO>> GetAllAsync()

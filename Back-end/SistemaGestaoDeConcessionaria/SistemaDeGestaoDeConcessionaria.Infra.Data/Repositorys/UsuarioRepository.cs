@@ -38,11 +38,6 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
             return usuario;
         }
 
-        public async Task<bool> ExistsUsuarioAsync()
-        {
-            return await _context.Usuario.AnyAsync(x => x.Excluido == false);
-        }
-
         public async Task<List<Usuario>> GetAllAsync()
         {
             return await _context.Usuario.Where(x => x.Excluido == false).ToListAsync();

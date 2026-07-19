@@ -46,10 +46,13 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             return Ok(automovel);
         }
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetAllAutomoveis()
         {
             var automovel = await _automovelService.GetAllAsync();
             return Ok(automovel);
         }
+
+
     }
 }
