@@ -4,6 +4,8 @@ using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Venda;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
 using SistemaDeGestaoDeConcessionaria.Application.Services;
+using SistemaGestaoDeConcessionaria.API.Extensions;
+using SistemaGestaoDeConcessionaria.API.Models;
 
 namespace SistemaGestaoDeConcessionaria.API.Controllers
 {
@@ -44,9 +46,12 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             return Ok(venda);
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllVendas()
+        public async Task<ActionResult> GetAllVendas([FromQuery] PaginationParams paginationParams)
         {
-            var vendas = await _vendaService.GetAllAsync();
+            var vendas = await _vendaService.GetAllAsync(paginationParams.PageNumber, paginationParams.PageSize);
+
+            Response.AddPaginationHeader
+                (new PaginationHeader(paginationParams.PageNumber, paginationParams.PageSize, vendas.TotalCount, vendas.TotalPages));
             return Ok(vendas);
         }
     }

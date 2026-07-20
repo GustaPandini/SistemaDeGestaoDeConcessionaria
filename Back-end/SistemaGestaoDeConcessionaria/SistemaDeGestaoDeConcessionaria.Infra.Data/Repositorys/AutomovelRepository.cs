@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using SistemaGestaoDeConcessionaria.Domain.Pagination;
+using SistemaDeGestaoDeConcessionaria.Infra.Data.Helpers;
 
 namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 {
@@ -38,9 +40,10 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
             return automovel;
         }
 
-        public async Task<List<Automovel>> GetAllAsync()
+        public async Task<PagedList<Automovel>> GetAllAsync(int pageNumber, int pageSize)
         {
-            return await _context.Automovel.Where(x => x.Excluido == false).ToListAsync();
+            var query = _context.Automovel.Where(x => x.Excluido == false).AsNoTracking();
+            return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
         }
 
         public async Task<Automovel> GetByIdAsync(int idAutomovel)

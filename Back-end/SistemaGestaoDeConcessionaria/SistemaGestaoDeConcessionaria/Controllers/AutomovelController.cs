@@ -4,6 +4,8 @@ using SistemaDeGestaoDeConcessionaria.Application.DTOs.Automovel;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
 using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
 using SistemaDeGestaoDeConcessionaria.Application.Services;
+using SistemaGestaoDeConcessionaria.API.Extensions;
+using SistemaGestaoDeConcessionaria.API.Models;
 
 namespace SistemaGestaoDeConcessionaria.API.Controllers
 {
@@ -47,16 +49,20 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
         }
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult> GetAllAutomoveis()
+        public async Task<ActionResult> GetAllAutomoveis([FromQuery] PaginationParams paginationParams)
         {
-            var automovel = await _automovelService.GetAllAsync();
+            var automovel = await _automovelService.GetAllAsync(paginationParams.PageNumber, paginationParams.PageSize);
+            Response.AddPaginationHeader
+                (new PaginationHeader(paginationParams.PageNumber, paginationParams.PageSize, automovel.TotalCount, automovel.TotalPages));
             return Ok(automovel);
         }
 
         [HttpGet("Deslogado")]
-        public async Task<ActionResult> GetAllDeslogadoAsync()
+        public async Task<ActionResult> GetAllDeslogadoAsync([FromQuery] PaginationParams paginationParams)
         {
-            var automovel = await _automovelService.GetAllDeslogadoAsync();
+            var automovel = await _automovelService.GetAllDeslogadoAsync(paginationParams.PageNumber, paginationParams.PageSize);
+            Response.AddPaginationHeader
+                (new PaginationHeader(paginationParams.PageNumber, paginationParams.PageSize, automovel.TotalCount, automovel.TotalPages));
             return Ok(automovel);
         }
 

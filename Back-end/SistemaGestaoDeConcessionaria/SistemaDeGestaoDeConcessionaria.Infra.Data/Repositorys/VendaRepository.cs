@@ -1,10 +1,12 @@
-﻿using SistemaDeGestaoDeConcessionaria.Infra.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeGestaoDeConcessionaria.Infra.Data.Context;
+using SistemaDeGestaoDeConcessionaria.Infra.Data.Helpers;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
+using SistemaGestaoDeConcessionaria.Domain.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 
 namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 {
@@ -37,12 +39,13 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
             return venda;
         }
 
-        public async Task<List<Venda>> GetAllAsync()
+        public async Task<PagedList<Venda>> GetAllAsync(int pageNumber, int pageSize)
         {
-            return await _context.Venda
+            var query = _context.Venda
                 .Include(x => x.Automovel)
                 .Include(x => x.Cliente)
-                .Where(x => x.Excluido == false).ToListAsync();
+                .Where(x => x.Excluido == false).AsNoTracking();
+            return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
         }
 
         public async Task<Venda> GetByIdAsync(int idVenda)

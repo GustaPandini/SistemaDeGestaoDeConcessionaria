@@ -4,6 +4,7 @@ using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
 using SistemaGestaoDeConcessionaria.Application.Execptions;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
+using SistemaGestaoDeConcessionaria.Domain.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -121,9 +122,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             };
         }
 
-        public async Task<List<AutomovelGetDTO>> GetAllAsync()
+        public async Task<PagedList<AutomovelGetDTO>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var automoveis = await _automovelRepository.GetAllAsync();
+            var automoveis = await _automovelRepository.GetAllAsync(pageNumber, pageSize);
             var listaAutomoveis = new List<AutomovelGetDTO>();
             foreach (var automovel in automoveis)
             {
@@ -149,12 +150,12 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                     Vendido = automovel.Vendido
                 });
             }
-            return listaAutomoveis;
+            return new PagedList<AutomovelGetDTO>(listaAutomoveis, automoveis.CurrentPage, automoveis.PageSize, automoveis.TotalCount);
         }
 
-        public async Task<List<AutomovelGetDTO>> GetAllDeslogadoAsync()
+        public async Task<PagedList<AutomovelGetDTO>> GetAllDeslogadoAsync(int pageNumber, int pageSize)
         {
-            var automoveis = await _automovelRepository.GetAllAsync();
+            var automoveis = await _automovelRepository.GetAllAsync(pageNumber, pageSize);
             var listaAutomoveis = new List<AutomovelGetDTO>();
             foreach (var automovel in automoveis)
             {
@@ -180,7 +181,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                     Vendido = automovel.Vendido
                 });
             }
-            return listaAutomoveis;
+            return new PagedList<AutomovelGetDTO>(listaAutomoveis, automoveis.CurrentPage, automoveis.PageSize, automoveis.TotalCount);
         }
 
         public async Task<AutomovelGetDTO> GetByIdAsync(int idAutomovel)

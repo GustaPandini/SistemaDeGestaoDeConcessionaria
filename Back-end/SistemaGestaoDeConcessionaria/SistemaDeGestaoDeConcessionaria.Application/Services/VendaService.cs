@@ -5,6 +5,7 @@ using SistemaDeGestaoDeConcessionaria.Application.Interfaces;
 using SistemaGestaoDeConcessionaria.Application.Execptions;
 using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Interfaces;
+using SistemaGestaoDeConcessionaria.Domain.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -82,9 +83,9 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             };
         }
 
-        public async Task<List<VendaGetDetailDTO>> GetAllAsync()
+        public async Task<PagedList<VendaGetDetailDTO>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var vendas = await _vendaRepository.GetAllAsync();
+            var vendas = await _vendaRepository.GetAllAsync(pageNumber, pageSize);
             var listaVendasDetail = new List<VendaGetDetailDTO>();
             listaVendasDetail.AddRange(vendas
                 .Where(venda => !venda.Excluido)
@@ -120,7 +121,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                         Endereco = venda.Cliente.Endereco
                     }
                 }));
-            return listaVendasDetail;
+            return new PagedList<VendaGetDetailDTO>(listaVendasDetail, vendas.CurrentPage, vendas.PageSize, vendas.TotalCount);
         }
 
         public async Task<VendaGetDetailDTO> GetByIdAsync(int idVenda)
