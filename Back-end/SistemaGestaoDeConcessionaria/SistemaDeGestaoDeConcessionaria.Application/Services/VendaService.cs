@@ -110,7 +110,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                         Preco = venda.Automovel.Preco,
                         Blindado = venda.Automovel.Blindado,
                         QuantidadeDonos = venda.Automovel.QuantidadeDonos,
-                        Vendido = venda.Automovel.Vendido
+                        Vendido = venda.Automovel.Vendido,
+                        ImagensUrl = venda.Automovel.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
                     },
                     Cliente = new ClienteGetDTO
                     {
@@ -157,7 +158,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                     Preco = venda.Automovel.Preco,
                     Blindado = venda.Automovel.Blindado,
                     QuantidadeDonos = venda.Automovel.QuantidadeDonos,
-                    Vendido = venda.Automovel.Vendido
+                    Vendido = venda.Automovel.Vendido,
+                    ImagensUrl = venda.Automovel.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
                 },
                 Cliente = new ClienteGetDTO
                 {
@@ -187,8 +189,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
             venda.DataDaVenda = vendaPutDTO.DataDaVenda;
             venda.ValorPago = vendaPutDTO.ValorPago;
             venda.FormaDePagamento = vendaPutDTO.FormaDePagamento;
-            venda.idAutomovel = vendaPutDTO.idCliente;
-            venda.idCliente = vendaPutDTO.idAutomovel;
+            venda.idAutomovel = vendaPutDTO.idAutomovel;
+            venda.idCliente = vendaPutDTO.idCliente;
 
             var vendaAtualizada = await _vendaRepository.UpdateAsync(venda);
             if (vendaAtualizada == null)

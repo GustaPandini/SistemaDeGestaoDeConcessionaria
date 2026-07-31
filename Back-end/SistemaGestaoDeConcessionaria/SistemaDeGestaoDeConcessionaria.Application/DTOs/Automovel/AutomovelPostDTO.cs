@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -38,5 +39,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.DTOs.Automovel
         public bool Blindado { get; set; }
         [Required(ErrorMessage = "É obrigatório informar a quantidade de donos que o automovel teve.")]
         public int QuantidadeDonos { get; set; }
+        public List<IFormFile> Imagens { get; set; }
     }
 }

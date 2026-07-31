@@ -43,6 +43,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
         {
             var query = _context.Venda
                 .Include(x => x.Automovel)
+                .ThenInclude(i => i.Imagens)
                 .Include(x => x.Cliente)
                 .Where(x => x.Excluido == false).AsNoTracking();
             return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
@@ -52,6 +53,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
         {
             return await _context.Venda
                 .Include(x => x.Automovel)
+                .ThenInclude(i => i.Imagens)
                 .Include(x => x.Cliente)
                 .FirstOrDefaultAsync(x => x.idVenda == idVenda);
         }

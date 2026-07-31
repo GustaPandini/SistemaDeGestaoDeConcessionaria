@@ -42,7 +42,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 
         public async Task<PagedList<Automovel>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var query = _context.Automovel.Where(x => x.Excluido == false).AsNoTracking();
+            var query = _context.Automovel.Include(x => x.Imagens).Where(x => x.Excluido == false).AsNoTracking();
             return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
         }
 
