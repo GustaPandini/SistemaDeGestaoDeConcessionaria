@@ -14,5 +14,7 @@ namespace SistemaGestaoDeConcessionaria.Domain.Interfaces
         Task<Automovel> AddAsync(Automovel automovel);
         Task<Automovel> UpdateAsync(Automovel automovel);
         Task<Automovel> DeleteAsync(int idAutomovel);
+        Task<ImagensAutomovel> GetImagemByIdAsync(int idImagem);
+        Task<ImagensAutomovel> RemoveImagemAsync(ImagensAutomovel imagem);
     }
 }

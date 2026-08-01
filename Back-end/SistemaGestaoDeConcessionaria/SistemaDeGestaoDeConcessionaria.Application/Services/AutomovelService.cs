@@ -40,6 +40,23 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Excluido = false,
                 Imagens = new List<ImagensAutomovel>()
             };
+
+            if (automovelPostDTO.Imagens != null && automovelPostDTO.Imagens.Count > 0)
+            {
+                foreach (var imagemFile in automovelPostDTO.Imagens)
+                {
+                    var result = await _imagensService.UploadImageAsync(imagemFile);
+                    if (result.Url != null)
+                    {
+                        automovel.Imagens.Add(new ImagensAutomovel
+                        {
+                            Url = result.Url,
+                            PublicId = result.PublicId
+                        });
+                    }
+                }
+            }
+
             var automovelExiste = await _automovelRepository.GetByPlacaOuChassiAsync(automovel.PlacaOuChassi);
             if (automovelExiste != null)
             {
@@ -76,26 +93,10 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                         Blindado = automovelAtualizado.Blindado,
                         QuantidadeDonos = automovelAtualizado.QuantidadeDonos,
                         Vendido = automovelAtualizado.Vendido,
-                        ImagensUrl = automovelAtualizado.Imagens.Select(i => i.Url).ToList()
+                        ImagensUrl = automovelAtualizado.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
                     };
                 }
                 throw new Exception("Já existe um automóvel com essa placa ou chassi cadastrado.");
-            }
-
-            if (automovelPostDTO.Imagens != null && automovelPostDTO.Imagens.Count > 0)
-            {
-                foreach (var imagemFile in automovelPostDTO.Imagens)
-                {
-                    var result = await _imagensService.UploadImageAsync(imagemFile);
-                    if (result.Url != null)
-                    {
-                        automovel.Imagens.Add(new ImagensAutomovel
-                        {
-                            Url = result.Url,
-                            PublicId = result.PublicId
-                        });
-                    }
-                }
             }
 
             var automovelAdicionado = await _automovelRepository.AddAsync(automovel);
@@ -115,7 +116,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Blindado = automovelAdicionado.Blindado,
                 QuantidadeDonos = automovelAdicionado.QuantidadeDonos,
                 Vendido = automovelAdicionado.Vendido,
-                ImagensUrl = automovelAdicionado.Imagens.Select(i => i.Url).ToList()
+                ImagensUrl = automovelAdicionado.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
             };
         }
 
@@ -142,7 +143,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Blindado = automovelDeletado.Blindado,
                 QuantidadeDonos = automovelDeletado.QuantidadeDonos,
                 Vendido = automovelDeletado.Vendido,
-                ImagensUrl = automovelDeletado.Imagens.Select(i => i.Url).ToList()
+                ImagensUrl = automovelDeletado.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
             };
         }
 
@@ -172,7 +173,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                     Blindado = automovel.Blindado,
                     QuantidadeDonos = automovel.QuantidadeDonos,
                     Vendido = automovel.Vendido,
-                    ImagensUrl = automovel.Imagens.Select(i => i.Url).ToList(),
+                    ImagensUrl = automovel.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
                 });
             }
             return new PagedList<AutomovelGetDTO>(listaAutomoveis, automoveis.CurrentPage, automoveis.PageSize, automoveis.TotalCount);
@@ -204,7 +205,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                     Blindado = automovel.Blindado,
                     QuantidadeDonos = automovel.QuantidadeDonos,
                     Vendido = automovel.Vendido,
-                    ImagensUrl = automovel.Imagens.Select(i => i.Url).ToList()
+                    ImagensUrl = automovel.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
                 });
             }
             return new PagedList<AutomovelGetDTO>(listaAutomoveis, automoveis.CurrentPage, automoveis.PageSize, automoveis.TotalCount);
@@ -238,7 +239,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Blindado = automovel.Blindado,
                 QuantidadeDonos = automovel.QuantidadeDonos,
                 Vendido = automovel.Vendido,
-                ImagensUrl = automovel.Imagens.Select(i => i.Url).ToList()
+                ImagensUrl = automovel.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
             };
         }
 
@@ -265,8 +266,26 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Blindado = automovel.Blindado,
                 QuantidadeDonos = automovel.QuantidadeDonos,
                 Vendido = automovel.Vendido,
-                ImagensUrl = automovel.Imagens.Select(i => i.Url).ToList()
+                ImagensUrl = automovel.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
             };
+        }
+
+        public async Task<ImagensAutomovel> RemoveImagem(int idImagem)
+        {
+            var imagem = await _automovelRepository.GetImagemByIdAsync(idImagem);
+            if (imagem == null)
+            {
+                throw new NotFoundExecption("Imagem não encontrada.");
+            }
+
+            var imagemDeletada = await _imagensService.DeleteImageAsync(imagem.PublicId);
+            if(imagemDeletada == null)
+            {
+                throw new Exception("Erro ao deletar imagem.");
+            }
+
+            await _automovelRepository.RemoveImagemAsync(imagem);
+            return imagem;
         }
 
         public async Task<AutomovelGetDTO> UpdateAsync(AutomovelPutDTO automovelPutDTO)
@@ -325,7 +344,7 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                         Blindado = automovelDeletadoAtualizado.Blindado,
                         QuantidadeDonos = automovelDeletadoAtualizado.QuantidadeDonos,
                         Vendido = automovelDeletadoAtualizado.Vendido,
-                        ImagensUrl = automovelDeletadoAtualizado.Imagens.Select(i => i.Url).ToList(),
+                        ImagensUrl = automovelDeletadoAtualizado.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
                     };
                 }
                 throw new Exception("Já existe um automóvel com essa placa ou chassi cadastrado.");
@@ -368,7 +387,8 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Services
                 Preco = automovelAtualizado.Preco,
                 Blindado = automovelAtualizado.Blindado,
                 QuantidadeDonos = automovelAtualizado.QuantidadeDonos,
-                Vendido = automovelAtualizado.Vendido
+                Vendido = automovelAtualizado.Vendido,
+                ImagensUrl = automovelAtualizado.Imagens?.Select(i => i.Url).ToList() ?? new List<string>()
             };
         }
     }

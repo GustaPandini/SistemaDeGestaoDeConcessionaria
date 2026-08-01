@@ -66,5 +66,13 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             return Ok(automovel);
         }
 
+        [HttpDelete("imagem/{idImagem}")]
+        [Authorize]
+        public async Task<ActionResult> DeleteImagem(int idImagem)
+        {
+            await _automovelService.RemoveImagem(idImagem);
+
+            return Ok(new { message = "Imagem excluída com sucesso!" });
+        }
     }
 }
