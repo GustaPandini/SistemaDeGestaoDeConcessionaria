@@ -21,5 +21,6 @@ namespace SistemaGestaoDeConcessionaria.Domain.Entities
         public int QuantidadeDonos { get; set; }
         public bool Vendido { get; set; }
         public bool Excluido { get; set; }
+        public ICollection<ImagensAutomovel> Imagens { get; set; } = new List<ImagensAutomovel>();
     }
 }

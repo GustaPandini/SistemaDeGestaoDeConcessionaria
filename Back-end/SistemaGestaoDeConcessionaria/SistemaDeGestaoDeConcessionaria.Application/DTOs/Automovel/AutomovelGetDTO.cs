@@ -20,5 +20,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.DTOs.Automovel
         public bool Blindado { get; set; }
         public int QuantidadeDonos { get; set; }
         public bool Vendido { get; set; }
+        public List<string> ImagensUrl { get; set; }
     }
 }

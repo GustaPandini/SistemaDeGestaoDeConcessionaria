@@ -58,6 +58,8 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Ioc
             services.AddScoped<IVendaService, VendaService>();
             services.AddScoped<IAuthenticate, AuthenticateService>();
 
+            services.AddScoped<IImagensService, ImagensService>();
+
             return services;
 
             

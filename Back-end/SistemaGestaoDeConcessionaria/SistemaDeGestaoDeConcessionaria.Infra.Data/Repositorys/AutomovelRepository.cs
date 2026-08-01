@@ -42,7 +42,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
 
         public async Task<PagedList<Automovel>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var query = _context.Automovel.Where(x => x.Excluido == false).AsNoTracking();
+            var query = _context.Automovel.Include(x => x.Imagens).Where(x => x.Excluido == false).AsNoTracking();
             return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
         }
 
@@ -54,6 +54,18 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Repositorys
         public async Task<Automovel> GetByPlacaOuChassiAsync(string placaOuChassi)
         {
             return await _context.Automovel.AsNoTracking().FirstOrDefaultAsync(a => a.PlacaOuChassi == placaOuChassi);
+        }
+
+        public async Task<ImagensAutomovel> GetImagemByIdAsync(int idImagem)
+        {
+            return await _context.ImagensAutomovel.FirstOrDefaultAsync(i => i.Id == idImagem);
+        }
+
+        public async Task<ImagensAutomovel> RemoveImagemAsync(ImagensAutomovel imagem)
+        {
+            _context.ImagensAutomovel.Remove(imagem);
+            await _context.SaveChangesAsync();
+            return imagem;
         }
 
         public async Task<Automovel> UpdateAsync(Automovel automovel)

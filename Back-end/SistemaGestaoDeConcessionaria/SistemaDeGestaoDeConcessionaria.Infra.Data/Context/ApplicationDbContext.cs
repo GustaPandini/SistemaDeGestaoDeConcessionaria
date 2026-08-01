@@ -17,6 +17,7 @@ namespace SistemaDeGestaoDeConcessionaria.Infra.Data.Context
         public DbSet<Automovel> Automovel { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Venda> Venda { get; set; }
+        public DbSet<ImagensAutomovel> ImagensAutomovel {  get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

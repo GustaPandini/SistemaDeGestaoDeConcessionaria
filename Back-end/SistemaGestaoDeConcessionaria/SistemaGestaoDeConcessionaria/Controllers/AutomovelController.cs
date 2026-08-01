@@ -21,14 +21,14 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
         
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> AddAutomovel(AutomovelPostDTO automovelPostDTO)
+        public async Task<ActionResult> AddAutomovel([FromForm]AutomovelPostDTO automovelPostDTO)
         {
             var automovelAdicionado = await _automovelService.AddAsync(automovelPostDTO);
             return Ok(new { message = "Automóvel íncluido com sucesso!" });
         }
         [HttpPut]
         [Authorize]
-        public async Task<ActionResult> UpdateAutomovel(AutomovelPutDTO automovelPutDTO)
+        public async Task<ActionResult> UpdateAutomovel([FromForm]AutomovelPutDTO automovelPutDTO)
         {
             var automovelAtualizado = await _automovelService.UpdateAsync(automovelPutDTO);
             return Ok(new { message = "Automóvel atualizado com sucesso!" });
@@ -66,5 +66,13 @@ namespace SistemaGestaoDeConcessionaria.API.Controllers
             return Ok(automovel);
         }
 
+        [HttpDelete("imagem/{idImagem}")]
+        [Authorize]
+        public async Task<ActionResult> DeleteImagem(int idImagem)
+        {
+            await _automovelService.RemoveImagem(idImagem);
+
+            return Ok(new { message = "Imagem excluída com sucesso!" });
+        }
     }
 }

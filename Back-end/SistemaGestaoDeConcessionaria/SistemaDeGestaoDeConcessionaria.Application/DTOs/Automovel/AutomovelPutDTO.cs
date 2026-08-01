@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -42,5 +43,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.DTOs.Automovel
         public int QuantidadeDonos { get; set; }
         [Required(ErrorMessage = "É obrigatório informar se o automovel está disponivel.")]
         public bool Vendido { get; set; }
+        public List<IFormFile> Imagens { get; set; }
     }
 }

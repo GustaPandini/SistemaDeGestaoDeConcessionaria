@@ -1,5 +1,6 @@
 ﻿using SistemaDeGestaoDeConcessionaria.Application.DTOs.Automovel;
 using SistemaDeGestaoDeConcessionaria.Application.DTOs.Cliente;
+using SistemaGestaoDeConcessionaria.Domain.Entities;
 using SistemaGestaoDeConcessionaria.Domain.Pagination;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace SistemaDeGestaoDeConcessionaria.Application.Interfaces
         Task<AutomovelGetDTO> UpdateAsync(AutomovelPutDTO automovelPutDTO);
         Task<AutomovelGetDTO> DeleteAsync(int idAutomovel);
         Task<PagedList<AutomovelGetDTO>> GetAllDeslogadoAsync(int pageNumber, int pageSize);
+        Task<ImagensAutomovel> RemoveImagem(int idImagem);
     }
 }
