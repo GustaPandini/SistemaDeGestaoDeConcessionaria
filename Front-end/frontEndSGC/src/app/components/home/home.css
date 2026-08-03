@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+:host {
+    display: block;
+    background-color: #0d0e12;
+    color: #e0e6ed;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: rgba(18, 18, 24, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    border-bottom: 1px solid #222530;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.logo h1 span {
+    color: #8b5cf6;
+}
+
+.btn-login {
+    background: transparent;
+    border: 1px solid #8b5cf6;
+    color: #8b5cf6;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background: #8b5cf6;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+}
+
+/* Hero Section */
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #1e1b4b 0%, #0d0e12 100%);
+    border: 1px solid #2e2a72;
+    border-radius: 16px;
+    padding: 40px 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content h2 {
+    font-size: 2rem;
+    margin: 0 0 10px 0;
+    color: #fff;
+}
+
+.hero-content p {
+    color: #a1a1aa;
+    margin: 0 0 20px 0;
+    font-size: 1.1rem;
+}
+
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #25D366;
+    color: #000;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Vitrine Header */
+.vitrine-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #222530;
+    padding-bottom: 10px;
+}
+
+.vitrine-header h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0;
+}
+
+.total-count {
+    color: #71717a;
+    font-size: 0.9rem;
+}
+
+/* Grid de Cards */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* Card Principal */
+.card {
+    background: #161822;
+    border: 1px solid #222530;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: #8b5cf6;
+    box-shadow: 0 12px 25px rgba(139, 92, 246, 0.15);
+}
+
+/* Badges */
+.badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    display: flex;
+    gap: 6px;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-dono {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.badge-blindado {
+    background: #eab308;
+    color: #000;
+}
+
+/* Imagem */
+.card-img-wrapper {
+    position: relative;
+    height: 210px;
+    overflow: hidden;
+    background-color: #0f1017;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-img {
+    transform: scale(1.05);
+}
+
+.card-img-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #52525b;
+}
+
+/* Conteúdo */
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-title h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #f4f4f5;
+}
+
+.versao {
+    color: #a1a1aa;
+    font-size: 0.85rem;
+    display: block;
+    margin-top: 4px;
+}
+
+/* Especificações */
+.card-specs {
+    display: flex;
+    justify-content: space-between;
+    background: #0f1017;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin: 18px 0;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-item .label {
+    font-size: 0.7rem;
+    color: #71717a;
+    text-transform: uppercase;
+}
+
+.spec-item .value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e4e4e7;
+    margin-top: 2px;
+}
+
+/* Rodapé do Card */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.price-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #71717a;
+}
+
+.preco {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #22c55e;
+}
+
+.btn-detalhes {
+    background: #8b5cf6;
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-detalhes:hover {
+    background: #7c3aed;
+}
+
+.sem-carros {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px;
+    color: #71717a;
+}

@@ -1,0 +1,84 @@
+<header class="header">
+    <div class="logo">
+        <h1>SGC <span>Auto</span></h1>
+    </div>
+    <button class="btn-login">Área Restrita</button>
+</header>
+
+<main>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2>Encontre seu próximo seminovo</h2>
+            <p>Veículos selecionados, revisados e com as melhores condições do mercado.</p>
+            <a href="https://wa.me/5500000000000" target="_blank" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Falar com Vendedor
+            </a>
+        </div>
+    </section>
+
+    <section class="vitrine-container">
+        <div class="vitrine-header">
+            <h3>Veículos em Destaque</h3>
+            <span class="total-count">{{ automoveis().length }} opções disponíveis</span>
+        </div>
+
+        <div class="cards-container">
+            @for (carro of automoveis(); track carro.idAutomovel) {
+                <article class="card">
+                    <div class="badges">
+                        @if (carro.quantidadeDonos === 1) {
+                            <span class="badge badge-dono">Único Dono</span>
+                        }
+                        @if (carro.blindado) {
+                            <span class="badge badge-blindado">Blindado</span>
+                        }
+                    </div>
+
+                    <div class="card-img-wrapper">
+                        @if (carro.imagensUrl && carro.imagensUrl.length > 0) {
+                            <img [src]="carro.imagensUrl[0]" [alt]="carro.marca + ' ' + carro.modelo" class="card-img" />
+                        } @else {
+                            <div class="card-img-placeholder">
+                                <span>Foto Indisponível</span>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="card-content">
+                        <div class="card-title">
+                            <h3>{{ carro.marca }} {{ carro.modelo }}</h3>
+                            <span class="versao">{{ carro.versao }}</span>
+                        </div>
+
+                        <div class="card-specs">
+                            <div class="spec-item">
+                                <span class="label">Ano</span>
+                                <span class="value">{{ carro.ano }}/{{ carro.anoModelo }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="label">Km</span>
+                                <span class="value">{{ carro.quilometragem | number }} km</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="label">Cor</span>
+                                <span class="value">{{ carro.cor }}</span>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="price-container">
+                                <span class="price-label">Preço à vista</span>
+                                <p class="preco">{{ carro.preco | currency:'BRL':'symbol':'1.0-0' }}</p>
+                            </div>
+                            <button class="btn-detalhes">Tenho Interesse</button>
+                        </div>
+                    </div>
+                </article>
+            } @empty {
+                <div class="sem-carros">
+                    <p>Nenhum automóvel disponível no momento.</p>
+                </div>
+            }
+        </div>
+    </section>
+</main>
