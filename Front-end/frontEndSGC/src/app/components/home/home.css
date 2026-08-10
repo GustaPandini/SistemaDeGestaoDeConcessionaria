@@ -12,7 +12,6 @@
     min-height: 100vh;
 }
 
-/* Header */
 .header {
     background: rgba(18, 18, 24, 0.8);
     backdrop-filter: blur(10px);
@@ -54,7 +53,6 @@
     box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
 }
 
-/* Hero Section */
 main {
     max-width: 1300px;
     margin: 0 auto;
@@ -100,7 +98,6 @@ main {
     box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
 }
 
-/* Vitrine Header */
 .vitrine-header {
     display: flex;
     justify-content: space-between;
@@ -121,14 +118,13 @@ main {
     font-size: 0.9rem;
 }
 
-/* Grid de Cards */
+
 .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 25px;
 }
 
-/* Card Principal */
 .card {
     background: #161822;
     border: 1px solid #222530;
@@ -146,7 +142,6 @@ main {
     box-shadow: 0 12px 25px rgba(139, 92, 246, 0.15);
 }
 
-/* Badges */
 .badges {
     position: absolute;
     top: 12px;
@@ -174,7 +169,6 @@ main {
     color: #000;
 }
 
-/* Imagem */
 .card-img-wrapper {
     position: relative;
     height: 210px;
@@ -201,7 +195,6 @@ main {
     color: #52525b;
 }
 
-/* Conteúdo */
 .card-content {
     padding: 20px;
     display: flex;
@@ -222,7 +215,6 @@ main {
     margin-top: 4px;
 }
 
-/* Especificações */
 .card-specs {
     display: flex;
     justify-content: space-between;
@@ -250,7 +242,6 @@ main {
     margin-top: 2px;
 }
 
-/* Rodapé do Card */
 .card-footer {
     display: flex;
     justify-content: space-between;

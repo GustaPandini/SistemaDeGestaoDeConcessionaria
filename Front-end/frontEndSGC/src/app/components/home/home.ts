@@ -1,19 +1,19 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Necessário para pipes como o CurrencyPipe
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AutomovelService } from '../../service/automovelService';
 import { Automovel } from '../../Models/automovel';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
   private automovelService = inject(AutomovelService);
   
-  // Signal que guardará a lista de automóveis
   public automoveis = signal<Automovel[]>([]);
 
   ngOnInit(): void {

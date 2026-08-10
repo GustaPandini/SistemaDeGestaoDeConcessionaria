@@ -1,0 +1,58 @@
+<main class="login-container">
+    <div class="login-card">
+        
+        <div class="login-header">
+            <h1>SGC <span>Auto</span></h1>
+            <p>Acesso à Área Restrita</p>
+        </div>
+
+        <form (ngSubmit)="fazerLogin()" class="login-form">
+            
+            @if (erro()) {
+                <div class="alerta-erro">
+                    E-mail ou senha incorretos. Tente novamente.
+                </div>
+            }
+
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    [(ngModel)]="email" 
+                    placeholder="exemplo@sgc.com" 
+                    required 
+                />
+            </div>
+
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input 
+                    type="password" 
+                    id="senha" 
+                    name="senha" 
+                    [(ngModel)]="senha" 
+                    placeholder="Digite sua senha" 
+                    required 
+                />
+            </div>
+
+            <div class="form-opcoes">
+                <label class="lembrar-senha">
+                    <input type="checkbox" name="lembrar"> Lembrar-me
+                </label>
+                <a href="#" class="link-recuperar">Esqueceu a senha?</a>
+            </div>
+
+            <button type="submit" class="btn-entrar">Acessar Sistema</button>
+        </form>
+
+        <div class="login-footer">
+            <button class="btn-voltar" (click)="voltar()">
+                &larr; Voltar para o site
+            </button>
+        </div>
+
+    </div>
+</main>
