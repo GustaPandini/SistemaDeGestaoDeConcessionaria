@@ -35,7 +35,7 @@ export class Login {
             localStorage.setItem('tokenSGC', meuToken);
             localStorage.setItem('nomeSGC', nomeUsuario);
         }
-        alert(`Login realizado com sucesso! Bem-vindo, ${nomeUsuario}.`);
+        this.router.navigate(['/home-admin'])
       },
       error: (erroApi: any) => {
         console.error('Falha na autenticação', erroApi);

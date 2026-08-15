@@ -1,0 +1,96 @@
+<!-- HEADER DO PAINEL -->
+<header class="admin-header">
+    <div class="logo">
+        <h1>SGC <span>Admin</span></h1>
+    </div>
+
+    <!-- Navegação das 4 Seções Exatas -->
+    <nav class="admin-nav">
+        <button [class.ativo]="secaoAtiva() === 'automoveis'" (click)="mudarSecao('automoveis')">Automóveis</button>
+        <button [class.ativo]="secaoAtiva() === 'clientes'" (click)="mudarSecao('clientes')">Clientes</button>
+        <button [class.ativo]="secaoAtiva() === 'vendas'" (click)="mudarSecao('vendas')">Vendas</button>
+        <button [class.ativo]="secaoAtiva() === 'usuarios'" (click)="mudarSecao('usuarios')">Usuários</button>
+    </nav>
+
+    <div class="user-profile">
+        <span class="user-name">Olá, {{ nomeUsuario() || 'Admin' }}</span>
+        <button class="btn-sair" (click)="sair()">Sair</button>
+    </div>
+</header>
+
+<main>
+    <!-- ========================================== -->
+    <!-- SEÇÃO: AUTOMÓVEIS                          -->
+    <!-- ========================================== -->
+    @if (secaoAtiva() === 'automoveis') {
+        <section class="admin-section">
+            <div class="section-header">
+                <h2>Gerenciamento de Automóveis</h2>
+                <p>Adicione, edite ou remova veículos do estoque.</p>
+            </div>
+
+            <div class="cards-container">
+                
+                <!-- CARD FIXO 1: ADICIONAR NOVO (Sempre o primeiro) -->
+                <article class="card card-add" (click)="adicionarAutomovel()">
+                    <div class="add-content">
+                        <i class="icone-add">+</i>
+                        <h3>Adicionar Automóvel</h3>
+                        <p>Cadastrar novo veículo no estoque</p>
+                    </div>
+                </article>
+
+                <!-- LOOP DE AUTOMÓVEIS DA API -->
+                @for (carro of automoveis(); track carro.idAutomovel) {
+                    <article class="card">
+                        
+                        <div class="card-img-wrapper">
+                            @if (carro.imagensUrl && carro.imagensUrl.length > 0) {
+                                <img [src]="carro.imagensUrl[0]" [alt]="carro.marca" class="card-img" />
+                            } @else {
+                                <div class="card-img-placeholder">Sem Foto</div>
+                            }
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-title">
+                                <h3>{{ carro.marca }} {{ carro.modelo }}</h3>
+                                <span class="versao">{{ carro.versao }}</span>
+                            </div>
+
+                            <div class="card-specs">
+                                <div class="spec-item">
+                                    <span class="label">Ano</span>
+                                    <span class="value">{{ carro.ano }}/{{ carro.anoModelo }}</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="label">Km</span>
+                                    <span class="value">{{ carro.quilometragem | number }}</span>
+                                </div>
+                                <!-- Troca da Cor pela Placa/Chassi conforme solicitado -->
+                                <div class="spec-item">
+                                    <span class="label">Placa/Chassi</span>
+                                    <span class="value placa-destaque">{{ carro.placaOuChassi }}</span>
+                                </div>
+                            </div>
+
+                            <div class="card-footer-admin">
+                                <p class="preco">{{ carro.preco | currency:'BRL':'symbol':'1.0-0' }}</p>
+                                
+                                <div class="acoes-admin">
+                                    <button class="btn-editar" (click)="editarAutomovel(carro)">Editar</button>
+                                    <button class="btn-excluir" (click)="excluirAutomovel(carro)">Excluir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+
+    <!-- As outras seções ficarão vazias por enquanto, aguardando seus próximos comandos -->
+    @if (secaoAtiva() === 'clientes') { <section class="admin-section"><h2>Clientes em breve...</h2></section> }
+    @if (secaoAtiva() === 'vendas') { <section class="admin-section"><h2>Vendas em breve...</h2></section> }
+    @if (secaoAtiva() === 'usuarios') { <section class="admin-section"><h2>Usuários em breve...</h2></section> }
+</main>
